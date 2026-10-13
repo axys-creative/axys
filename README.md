@@ -1,7 +1,23 @@
-Guide to website code.
+# axys
 
-// Forms
+SvelteKit + SCSS + JSON content, edited through Decap CMS and hosted on Netlify.
 
-The 'name' attribute on the <form> field is what's displayed in the Netlify dashboard.
+## Developing
 
-The 'action' attribute is only needed when redirecting the user to a new page. In our case, we are able to remove it and have javascript handle to logic for form submissions. See ./form.js for the code.
+```sh
+bun install
+bun dev
+```
+
+Vite compiles SCSS (global `src/styles/` and component `<style lang="scss">` blocks) with hot reload. There is no separate Sass step.
+
+## Building
+
+```sh
+bun run build
+bun preview
+```
+
+## Decap CMS
+
+The CMS lives at `/admin` (`src/routes/admin/`), configured in `config.json`. For local editing, run `bunx decap-server` alongside `bun dev`.

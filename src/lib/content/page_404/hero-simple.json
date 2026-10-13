@@ -1,0 +1,14 @@
+{
+	"eyebrowText": "404",
+	"title": "Page not found",
+	"description": "The page you’re looking for doesn’t exist or has been removed.",
+	"cta": {
+		"primary": {
+			"text": "Return home",
+			"textDescription": "Return to the home page",
+			"url": "/",
+			"newTab": false,
+			"iconEnd": ""
+		}
+	}
+}
