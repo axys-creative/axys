@@ -1,0 +1,121 @@
+{
+	"title": "Member Plans [✺]{.primary}",
+	"description": "Find the right plan for you and eliminate the hassle of inconsistent freelancers and expensive agencies. Let’s get started today.",
+	"priceToggle": true,
+	"discount": "10%",
+	"plans": [
+		{
+			"title": "Designer",
+			"priceMonthly": "1,995",
+			"priceQuarterly": "1,795",
+			"totalQuarterly": "5,385",
+			"savingsQuarterly": "$600",
+			"features": [
+				{
+					"text": "Unlimited Web Design",
+					"strong": true
+				},
+				{
+					"text": "One request at a time"
+				},
+				{
+					"text": "Unlimited revisions"
+				},
+				{
+					"text": "1-2 day turnaround"
+				},
+				{
+					"text": "Pause or cancel anytime"
+				}
+			],
+			"ctaMonthly": {
+				"text": "Subscribe",
+				"textDescription": "Subscribe to the monthly designer plan",
+				"url": "https://buy.stripe.com/bIYcNC5A5d1SaEoeV2",
+				"newTab": false
+			},
+			"ctaQuarterly": {
+				"text": "Subscribe",
+				"textDescription": "Subscribe to the quarterly designer plan",
+				"url": "https://buy.stripe.com/7sYaEWdpXbGc0I2erO8ww0d",
+				"newTab": false
+			}
+		},
+		{
+			"title": "Developer",
+			"priceMonthly": "2,995",
+			"priceQuarterly": "2,695",
+			"totalQuarterly": "8,085",
+			"savingsQuarterly": "$900",
+			"features": [
+				{
+					"text": "Unlimited Web Development",
+					"strong": true
+				},
+				{
+					"text": "One request at a time"
+				},
+				{
+					"text": "Unlimited revisions"
+				},
+				{
+					"text": "1-2 day turnaround"
+				},
+				{
+					"text": "Pause or cancel anytime"
+				}
+			],
+			"ctaMonthly": {
+				"text": "Subscribe",
+				"textDescription": "Subscribe to the monthly developer plan",
+				"url": "https://buy.stripe.com/8wM7ti2nTd1S6o85kn",
+				"newTab": false
+			},
+			"ctaQuarterly": {
+				"text": "Subscribe",
+				"textDescription": "Subscribe to the quarterly developer plan",
+				"url": "https://buy.stripe.com/5kQ7sKadL5hObmGcjG8ww0e",
+				"newTab": false
+			}
+		},
+		{
+			"title": "Premium",
+			"priceMonthly": "3,995",
+			"priceQuarterly": "3,595",
+			"totalQuarterly": "10,785",
+			"savingsQuarterly": "$1,200",
+			"featured": true,
+			"features": [
+				{
+					"text": "Unlimited Design + Development",
+					"strong": true
+				},
+				{
+					"text": "Two requests at a time",
+					"strong": true
+				},
+				{
+					"text": "Unlimited revisions"
+				},
+				{
+					"text": "1-2 day turnaround"
+				},
+				{
+					"text": "Pause or cancel anytime"
+				}
+			],
+			"ctaMonthly": {
+				"text": "Subscribe",
+				"textDescription": "Subscribe to the monthly premium plan",
+				"url": "https://buy.stripe.com/7sIaFue6B9PG8wg6oq",
+				"newTab": false
+			},
+			"ctaQuarterly": {
+				"text": "Subscribe",
+				"textDescription": "Subscribe to the quarterly premium plan",
+				"url": "https://buy.stripe.com/3cI5kC2Lj25CbmGgzW8ww0f",
+				"newTab": false
+			}
+		}
+	]
+}

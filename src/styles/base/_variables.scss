@@ -9,7 +9,7 @@ $grey-light: #ececec;
 $grey-lighter: #f1f1f1;
 $white: #fafafa;
 $coral: #e48c66;
-$blue: #ada4e3;
+$blue: #7ec1d4;
 $green: #a4d1a2;
 
 // `--display-light` and `--display-dark` are the `display` of an element shown only in that theme (a logo file).
@@ -78,6 +78,8 @@ $green: #a4d1a2;
 	--color-on-accent: #{$white};
 	--color-secondary: #{$blue};
 	--color-tertiary: #{$green};
+	--color-pink: #e1a7b4;
+	--color-yellow: #fbfaa2;
 	--color-success: #{$green};
 	--color-info: #{$blue};
 	--color-warning: #e8b84f;

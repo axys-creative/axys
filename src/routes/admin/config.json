@@ -96,37 +96,256 @@
 			"label": "Page - Home",
 			"files": [
 				{
-					"name": "hero_simple",
+					"name": "hero_dots_logo",
 					"label": "Hero",
-					"file": "src/lib/content/page_home/hero-simple.json",
+					"file": "src/lib/content/page_home/hero-dots-logo.json",
 					"preview_path": "#hero",
 					"fields": [
 						{
-							"name": "eyebrowText",
-							"label": "Eyebrow text",
-							"widget": "string",
-							"required": false
-						},
-						{
-							"name": "eyebrowIcon",
-							"label": "Eyebrow icon",
-							"widget": "image",
+							"name": "eyebrowLines",
+							"label": "Small lines",
+							"widget": "list",
 							"required": false,
-							"hint": "An SVG icon; it takes the eyebrow color."
+							"field": {
+								"name": "line",
+								"label": "Line",
+								"widget": "string"
+							},
+							"hint": "Short lines above the title, one per line."
 						},
 						{
-							"name": "eyebrowDot",
-							"label": "Eyebrow status dot",
+							"name": "words",
+							"label": "Cycling words",
+							"widget": "list",
+							"min": 1,
+							"field": {
+								"name": "word",
+								"label": "Word",
+								"widget": "string"
+							},
+							"hint": "The first word of the title swaps through these."
+						},
+						{
+							"name": "wordColors",
+							"label": "Word colors",
+							"widget": "list",
+							"required": false,
+							"field": {
+								"name": "color",
+								"label": "Color",
+								"widget": "string"
+							},
+							"hint": "One CSS color per word, e.g. var(--color-accent) or #fbfaa2."
+						},
+						{
+							"name": "line",
+							"label": "Second line",
+							"widget": "string"
+						},
+						{
+							"name": "lineEnd",
+							"label": "Third line",
+							"widget": "string"
+						},
+						{
+							"name": "cta",
+							"label": "Call to action",
+							"widget": "object",
+							"fields": [
+								{
+									"name": "primary",
+									"label": "Primary button",
+									"widget": "object",
+									"required": true,
+									"fields": [
+										{
+											"name": "text",
+											"label": "Text",
+											"widget": "string",
+											"required": true
+										},
+										{
+											"name": "textDescription",
+											"label": "Accessible description",
+											"widget": "string",
+											"required": false,
+											"hint": "Optional aria-label for screen readers"
+										},
+										{
+											"name": "url",
+											"label": "URL",
+											"widget": "string",
+											"required": true
+										},
+										{
+											"name": "newTab",
+											"label": "Open in new tab",
+											"widget": "boolean",
+											"default": false,
+											"required": false
+										},
+										{
+											"name": "iconEnd",
+											"label": "Icon after text",
+											"widget": "string",
+											"required": false,
+											"hint": "Icon file name without .svg (e.g. chevron-right). See /style-guide for examples."
+										}
+									]
+								},
+								{
+									"name": "secondary",
+									"label": "Secondary button",
+									"widget": "object",
+									"required": false,
+									"fields": [
+										{
+											"name": "text",
+											"label": "Text",
+											"widget": "string",
+											"required": false
+										},
+										{
+											"name": "textDescription",
+											"label": "Accessible description",
+											"widget": "string",
+											"required": false,
+											"hint": "Optional aria-label for screen readers"
+										},
+										{
+											"name": "url",
+											"label": "URL",
+											"widget": "string",
+											"required": false
+										},
+										{
+											"name": "newTab",
+											"label": "Open in new tab",
+											"widget": "boolean",
+											"default": false,
+											"required": false
+										},
+										{
+											"name": "iconEnd",
+											"label": "Icon after text",
+											"widget": "string",
+											"required": false,
+											"hint": "Icon file name without .svg (e.g. chevron-right). See /style-guide for examples."
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "scroll_horizontal",
+					"label": "Message",
+					"file": "src/lib/content/page_home/scroll-horizontal.json",
+					"preview_path": "#message",
+					"fields": [
+						{
+							"name": "message",
+							"label": "Message",
+							"widget": "text",
+							"hint": "One long line that slides sideways as the page scrolls. Style words with [words]{.class}. Syntax and class list: axyscreative.com/tokens"
+						}
+					]
+				},
+				{
+					"name": "work_gallery",
+					"label": "Our Work",
+					"file": "src/lib/content/page_home/work-gallery.json",
+					"preview_path": "#work",
+					"fields": [
+						{
+							"name": "title",
+							"label": "Title",
+							"widget": "string",
+							"hint": "Style words with [words]{.class}. Syntax and class list: axyscreative.com/tokens"
+						},
+						{
+							"name": "description",
+							"label": "Description",
+							"widget": "text",
+							"required": false,
+							"hint": "Style words with [words]{.class}. Syntax and class list: axyscreative.com/tokens"
+						},
+						{
+							"name": "grid",
+							"label": "Grid",
 							"widget": "select",
 							"options": [
-								{ "label": "None", "value": "none" },
-								{ "label": "Pulse", "value": "pulse" },
-								{ "label": "Sonar", "value": "sonar" }
+								{
+									"label": "Default",
+									"value": "default"
+								},
+								{
+									"label": "Alternate",
+									"value": "alternate"
+								}
 							],
-							"default": "none",
-							"required": false,
-							"hint": "A green dot before the eyebrow, such as for \"available for freelance\"."
+							"default": "alternate"
 						},
+						{
+							"name": "items",
+							"label": "Projects",
+							"widget": "list",
+							"summary": "{{fields.title}}",
+							"fields": [
+								{
+									"name": "title",
+									"label": "Title",
+									"widget": "string"
+								},
+								{
+									"name": "type",
+									"label": "Type",
+									"widget": "string",
+									"required": false,
+									"hint": "What was done, e.g. Design + Development."
+								},
+								{
+									"name": "year",
+									"label": "Year",
+									"widget": "string",
+									"required": false
+								},
+								{
+									"name": "url",
+									"label": "URL",
+									"widget": "string",
+									"required": false,
+									"hint": "Makes the image a link."
+								},
+								{
+									"name": "img",
+									"label": "Image",
+									"widget": "object",
+									"fields": [
+										{
+											"name": "src",
+											"label": "Image",
+											"widget": "image"
+										},
+										{
+											"name": "alt",
+											"label": "Alternative text",
+											"widget": "string",
+											"required": false
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "scroll_stack",
+					"label": "Member Benefits",
+					"file": "src/lib/content/page_home/scroll-stack.json",
+					"preview_path": "#benefits",
+					"fields": [
 						{
 							"name": "title",
 							"label": "Title",
@@ -230,21 +449,295 @@
 							]
 						},
 						{
-							"name": "layout",
-							"label": "Layout",
-							"widget": "select",
-							"options": ["column", "row"],
-							"default": "column",
-							"required": false,
-							"hint": "Row puts the description beside the title on wider screens."
+							"name": "nav",
+							"label": "Show panel links",
+							"widget": "boolean",
+							"default": true,
+							"required": false
 						},
 						{
-							"name": "align",
-							"label": "Alignment",
+							"name": "size",
+							"label": "Panel size",
 							"widget": "select",
-							"options": ["start", "center"],
-							"default": "center",
+							"options": [
+								{
+									"label": "Full",
+									"value": "full"
+								},
+								{
+									"label": "Half",
+									"value": "half"
+								}
+							],
+							"default": "half"
+						},
+						{
+							"name": "placement",
+							"label": "Panel side",
+							"widget": "select",
+							"options": [
+								{
+									"label": "Left",
+									"value": "left"
+								},
+								{
+									"label": "Center",
+									"value": "center"
+								},
+								{
+									"label": "Right",
+									"value": "right"
+								}
+							],
+							"default": "right"
+						},
+						{
+							"name": "panels",
+							"label": "Panels",
+							"widget": "list",
+							"min": 2,
+							"summary": "{{fields.title}}",
+							"fields": [
+								{
+									"name": "title",
+									"label": "Title",
+									"widget": "string"
+								},
+								{
+									"name": "description",
+									"label": "Description",
+									"widget": "text",
+									"required": false
+								},
+								{
+									"name": "icon",
+									"label": "Icon",
+									"widget": "string",
+									"required": false,
+									"hint": "Icon file name without .svg (e.g. infinity). See /style-guide for examples."
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "plan_selection",
+					"label": "Member Plans",
+					"file": "src/lib/content/page_home/plan-selection.json",
+					"preview_path": "#plans",
+					"fields": [
+						{
+							"name": "title",
+							"label": "Title",
+							"widget": "string",
+							"hint": "Style words with [words]{.class}. Syntax and class list: axyscreative.com/tokens"
+						},
+						{
+							"name": "description",
+							"label": "Description",
+							"widget": "text",
+							"required": false,
+							"hint": "Style words with [words]{.class}. Syntax and class list: axyscreative.com/tokens"
+						},
+						{
+							"name": "priceToggle",
+							"label": "Monthly / Quarterly switch",
+							"widget": "boolean",
+							"default": true,
 							"required": false
+						},
+						{
+							"name": "discount",
+							"label": "Quarterly discount",
+							"widget": "string",
+							"required": false,
+							"hint": "Named in the switch tooltip, e.g. 10%."
+						},
+						{
+							"name": "plans",
+							"label": "Plans",
+							"widget": "list",
+							"min": 1,
+							"summary": "{{fields.title}}",
+							"fields": [
+								{
+									"name": "title",
+									"label": "Title",
+									"widget": "string"
+								},
+								{
+									"name": "priceMonthly",
+									"label": "Monthly price",
+									"widget": "string",
+									"hint": "Per month, e.g. 1,995."
+								},
+								{
+									"name": "priceQuarterly",
+									"label": "Quarterly price",
+									"widget": "string",
+									"required": false,
+									"hint": "Per month on quarterly billing."
+								},
+								{
+									"name": "totalQuarterly",
+									"label": "Quarterly total",
+									"widget": "string",
+									"required": false
+								},
+								{
+									"name": "savingsQuarterly",
+									"label": "Quarterly savings",
+									"widget": "string",
+									"required": false,
+									"hint": "e.g. $600."
+								},
+								{
+									"name": "featured",
+									"label": "Featured",
+									"widget": "boolean",
+									"default": false,
+									"required": false,
+									"hint": "Stands out with an accent background."
+								},
+								{
+									"name": "features",
+									"label": "Features",
+									"widget": "list",
+									"summary": "{{fields.text}}",
+									"fields": [
+										{
+											"name": "text",
+											"label": "Text",
+											"widget": "string"
+										},
+										{
+											"name": "strong",
+											"label": "Bold",
+											"widget": "boolean",
+											"default": false,
+											"required": false
+										}
+									]
+								},
+								{
+									"name": "ctaMonthly",
+									"label": "Monthly button",
+									"widget": "object",
+									"required": true,
+									"fields": [
+										{
+											"name": "text",
+											"label": "Text",
+											"widget": "string"
+										},
+										{
+											"name": "textDescription",
+											"label": "Accessible description",
+											"widget": "string",
+											"required": false,
+											"hint": "Optional aria-label for screen readers"
+										},
+										{
+											"name": "url",
+											"label": "URL",
+											"widget": "string"
+										},
+										{
+											"name": "newTab",
+											"label": "Open in new tab",
+											"widget": "boolean",
+											"default": false,
+											"required": false
+										}
+									]
+								},
+								{
+									"name": "ctaQuarterly",
+									"label": "Quarterly button",
+									"widget": "object",
+									"required": false,
+									"fields": [
+										{
+											"name": "text",
+											"label": "Text",
+											"widget": "string"
+										},
+										{
+											"name": "textDescription",
+											"label": "Accessible description",
+											"widget": "string",
+											"required": false,
+											"hint": "Optional aria-label for screen readers"
+										},
+										{
+											"name": "url",
+											"label": "URL",
+											"widget": "string"
+										},
+										{
+											"name": "newTab",
+											"label": "Open in new tab",
+											"widget": "boolean",
+											"default": false,
+											"required": false
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "common_questions",
+					"label": "FAQ",
+					"file": "src/lib/content/page_home/common-questions.json",
+					"preview_path": "#faq",
+					"fields": [
+						{
+							"name": "title",
+							"label": "Title",
+							"widget": "string",
+							"hint": "Style words with [words]{.class}. Syntax and class list: axyscreative.com/tokens"
+						},
+						{
+							"name": "description",
+							"label": "Description",
+							"widget": "text",
+							"required": false,
+							"hint": "Style words with [words]{.class}. Syntax and class list: axyscreative.com/tokens"
+						},
+						{
+							"name": "icon",
+							"label": "Icon",
+							"widget": "string",
+							"required": false,
+							"hint": "Icon file name without .svg (e.g. chevron-down)."
+						},
+						{
+							"name": "singleOpen",
+							"label": "Opening one closes the others",
+							"widget": "boolean",
+							"default": true,
+							"required": false
+						},
+						{
+							"name": "items",
+							"label": "Questions",
+							"widget": "list",
+							"summary": "{{fields.title}}",
+							"fields": [
+								{
+									"name": "title",
+									"label": "Question",
+									"widget": "string"
+								},
+								{
+									"name": "content",
+									"label": "Answer",
+									"widget": "text",
+									"hint": "Plain text. {.br} is a line break."
+								}
+							]
 						}
 					]
 				}

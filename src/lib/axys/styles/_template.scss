@@ -1,0 +1,46 @@
+// The template's tokens, fonts and utility classes, so its components (header, buttons) work beside the original styles.
+@use 'base/variables';
+@use 'base/fonts';
+@use 'base/utils';
+
+// The original rules above set a color and weight on every element; the template's components set their own.
+.header a.logo {
+	--logo-size: 20px;
+	--logo-mark-color: var(--color-accent);
+
+	gap: 0;
+
+	.text {
+		max-width: 12ch;
+		overflow: hidden;
+		font-size: 16px;
+		margin-inline-start: 8px;
+		color: var(--color-text);
+		font-weight: 400;
+		white-space: nowrap;
+		transition:
+			max-width 0.3s ease,
+			margin 0.3s ease,
+			opacity 0.3s ease;
+	}
+}
+
+// Scrolling down folds the wordmark away; scrolling up, the top of the page or an open menu brings it back.
+.header[data-scroll-down]:not([data-nav-open]) a.logo .text {
+	max-width: 0;
+	margin: 0;
+	opacity: 0;
+}
+
+.axys-menu .text {
+	font-size: 16px;
+	font-weight: 300;
+}
+
+.header[data-scroll-down]:not([data-nav-open]) .axys-menu .text {
+	opacity: 0;
+}
+
+.header[data-scroll-down]:not([data-nav-open]) .axys-menu:is(:hover, :focus-visible) .text {
+	opacity: 1;
+}

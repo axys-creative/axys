@@ -5,6 +5,8 @@
 		srcLight?: string;
 		/** Image shown in the dark theme. */
 		srcDark?: string;
+		/** Text before the image, e.g. a wordmark split around the mark. */
+		textBefore?: string;
 		text?: string;
 		alt?: string;
 		url?: string;
@@ -15,12 +17,22 @@
 <script lang="ts">
 	import { isCurrentPage, onCurrentPageClick } from '$lib/utils/current-page';
 
-	let { src, srcLight, srcDark, text, alt = '', url, tint = false }: LogoProps = $props();
+	let {
+		src,
+		srcLight,
+		srcDark,
+		textBefore,
+		text,
+		alt = '',
+		url,
+		tint = false
+	}: LogoProps = $props();
 
-	const label = $derived(text ? undefined : alt || undefined);
+	const label = $derived(text || textBefore ? undefined : alt || undefined);
 </script>
 
 {#snippet content()}
+	{#if textBefore}<span class="text text-before">{textBefore}</span>{/if}
 	{#if srcLight || srcDark}
 		{#if srcLight}<img class="themed light" src={srcLight} alt={text ? '' : alt} />{/if}
 		{#if srcDark}<img class="themed dark" src={srcDark} alt={text ? '' : alt} />{/if}
@@ -82,7 +94,7 @@
 
 	.mark {
 		display: block;
-		background: currentColor;
+		background: var(--logo-mark-color, currentColor);
 		mask-size: contain;
 		mask-repeat: no-repeat;
 		mask-position: center;

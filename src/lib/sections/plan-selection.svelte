@@ -45,6 +45,7 @@
 	import SectionCopy from '$lib/components/section-copy.svelte';
 	import Tooltip from '$lib/components/tooltip.svelte';
 	import { animate } from '$lib/attachments/animate';
+	import { gradientBorder } from '$lib/attachments/gradient-border';
 	import { toggleSlider } from '$lib/attachments/toggle-slider';
 	import { preloadScramble, scrambleTo } from '$lib/utils/scramble';
 
@@ -119,7 +120,11 @@
 
 		<div class="plans" {@attach animate({ stagger: 0.125 })}>
 			{#each plans as plan (plan.title)}
-				<article class="plan" class:featured={plan.featured}>
+				<article
+					class="plan"
+					class:featured={plan.featured}
+					{@attach gradientBorder({ rayTrace: true })}
+				>
 					<h3 class="h2">{plan.title}</h3>
 
 					<div class="price-group">
@@ -207,6 +212,8 @@
 		padding: 4px;
 		border: 1px solid var(--color-border);
 		border-radius: var(--radius);
+		background: color-mix(in srgb, var(--color-bg) 80%, transparent);
+		backdrop-filter: blur(16px);
 		--slider-radius: calc(var(--radius) - 2px);
 		--slider-color: var(--color-accent);
 	}
@@ -267,14 +274,32 @@
 		flex-direction: column;
 		align-items: center;
 		gap: 24px;
-		padding: 64px 24px 40px;
+		padding: 80px 24px 56px;
 		border: 1px solid var(--color-border);
 		border-radius: var(--radius);
-		background: var(--color-bg);
+		background: color-mix(in srgb, var(--color-bg) 80%, transparent);
+		backdrop-filter: blur(16px);
 
 		@include mixins.max-sm {
-			padding: 48px 16px 32px;
+			padding: 64px 16px 44px;
 		}
+	}
+
+	// The ray trace glow sits behind the card, which is see-through, so it is cut down to a ring around the edge.
+	.plan {
+		--gradient-border-width: 2px;
+	}
+
+	.plan:global(.gradient-border--ray-trace)::before {
+		padding: var(--gradient-border-width);
+		mask:
+			linear-gradient(#000 0 0) content-box,
+			linear-gradient(#000 0 0);
+		-webkit-mask:
+			linear-gradient(#000 0 0) content-box,
+			linear-gradient(#000 0 0);
+		mask-composite: exclude;
+		-webkit-mask-composite: xor;
 	}
 
 	.price-group {
@@ -304,6 +329,12 @@
 		@include mixins.mq-motion-allow {
 			transition: color var(--duration) var(--ease);
 		}
+	}
+
+	// Nothing inside takes its own color, so the price and total follow their line.
+	.price span,
+	.total span {
+		color: inherit;
 	}
 
 	.frequency {
@@ -380,7 +411,7 @@
 		--featured-text: #0a0a0a;
 
 		border-color: transparent;
-		background: linear-gradient(110deg, #fff -50%, var(--color-accent) 30% 70%, #fff 150%);
+		background: color-mix(in srgb, var(--color-accent) 90%, transparent);
 		color: var(--featured-text);
 
 		.message,
@@ -393,15 +424,29 @@
 			background: linear-gradient(90deg, transparent, var(--featured-text), transparent);
 		}
 
+		h3,
+		.perks :is(li, span, strong) {
+			color: var(--featured-text);
+		}
+
+		.perks :global(.icon) {
+			color: var(--featured-text);
+		}
+
 		&.plan :global(.button.solid) {
-			border-color: #fff;
+			border-color: var(--featured-text);
 			background: #fff;
 			color: var(--featured-text);
 
 			@include mixins.desktop-hover {
 				background: transparent;
-				color: #fff;
+				color: var(--featured-text);
 			}
+		}
+
+		// The legacy `*` rule gives the label and icon their own white, so they take the button's color instead.
+		&.plan :global(.button.solid *) {
+			color: inherit;
 		}
 	}
 </style>

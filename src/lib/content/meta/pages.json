@@ -2,9 +2,9 @@
 	"pages": [
 		{
 			"path": "/",
-			"title": "Home",
-			"description": "",
-			"ogImage": "",
+			"title": "Unlimited Web Design & Development Services",
+			"description": "Unlock unlimited web design and development services. Subscribe for responsive, user-friendly websites optimized for accessibility and performance.",
+			"ogImage": "/public/axys-creative-og.png",
 			"crawlPage": true
 		},
 		{
@@ -74,6 +74,27 @@
 			"path": "/404",
 			"title": "Page Not Found",
 			"description": "The page you are looking for cannot be found. Check the address or return to the home page.",
+			"ogImage": "",
+			"crawlPage": false
+		},
+		{
+			"path": "/policies",
+			"title": "Policies",
+			"description": "",
+			"ogImage": "",
+			"crawlPage": true
+		},
+		{
+			"path": "/tokens",
+			"title": "CMS Tokens",
+			"description": "",
+			"ogImage": "",
+			"crawlPage": false
+		},
+		{
+			"path": "/home-template",
+			"title": "Home (template sections)",
+			"description": "",
 			"ogImage": "",
 			"crawlPage": false
 		}

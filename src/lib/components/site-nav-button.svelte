@@ -49,8 +49,8 @@
 	<span
 		class="magnet"
 		{@attach magnet({
-			x: 1,
-			y: 1,
+			x: 1.2,
+			y: 1.2,
 			followDuration: 500,
 			returnDuration: 350,
 			returnEase: 'cubic-bezier(0, 1.64, 0.63, 1.92)'
@@ -87,7 +87,7 @@
 
 		@include mixins.desktop-hover {
 			.text {
-				margin-inline-end: 16px;
+				margin-inline-end: 24px;
 			}
 
 			.icon {

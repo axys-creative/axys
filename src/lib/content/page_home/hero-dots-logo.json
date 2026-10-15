@@ -1,0 +1,29 @@
+{
+	"eyebrowLines": ["Unlimited services", "One basic subscription"],
+	"words": ["Creative", "Responsive", "Accessible", "Custom", "Engaging"],
+	"wordColors": [
+		"var(--color-accent)",
+		"var(--color-secondary)",
+		"var(--color-tertiary)",
+		"#fbfaa2",
+		"#e1a7b4"
+	],
+	"line": "web design +",
+	"lineEnd": "development",
+	"cta": {
+		"primary": {
+			"text": "View Plans",
+			"textDescription": "View our member plans",
+			"url": "#plans",
+			"newTab": false,
+			"iconEnd": ""
+		},
+		"secondary": {
+			"text": "Our Work",
+			"textDescription": "See our work",
+			"url": "#work",
+			"newTab": false,
+			"iconEnd": "chevron-right"
+		}
+	}
+}

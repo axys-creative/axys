@@ -237,7 +237,7 @@
 				name: 'icon',
 				description: "An icon name from `static/icons`, or `true` for the cursor's default icon."
 			},
-			{ name: 'iconSize', description: '`sm | md | lg`. Defaults to `sm`.' },
+			{ name: 'iconSize', description: '`sm | md | lg | xl`. Defaults to `sm`.' },
 			{ name: 'iconColor', description: 'Any CSS color for the icon.' },
 			{
 				name: 'image',

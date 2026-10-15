@@ -40,6 +40,7 @@
 	let lastIcon = $state('bolt');
 	let lastImage = $state('');
 	let lastLayer = $state<'front' | 'behind'>('behind');
+	let lastIconBehind = $state(false);
 	let controls = $state.raw<{ sync: (snapped: boolean) => void }>();
 
 	const variant = $derived(variants[cursor.variant ?? ''] ?? {});
@@ -47,7 +48,10 @@
 	const iconName = $derived(content?.icon === true ? defaultIcon : content?.icon);
 
 	$effect(() => {
-		if (iconName) lastIcon = iconName;
+		if (iconName) {
+			lastIcon = iconName;
+			lastIconBehind = content?.iconLayer === 'behind';
+		}
 	});
 
 	$effect(() => {
@@ -198,27 +202,34 @@
 				alt=""
 			/>
 		{/if}
-		<span
-			class="icon {content?.iconSize ?? 'sm'}"
-			class:show={!!iconName}
-			style="mask-image: url('/icons/{lastIcon}.svg'); background: {content?.iconColor ??
-				'currentColor'}"
-		></span>
+		{#if !lastIconBehind}{@render iconSpan()}{/if}
 	</div>
 </div>
 
-{#if lastImage && lastLayer === 'behind'}
+{#if (lastImage && lastLayer === 'behind') || lastIconBehind}
 	<div bind:this={layer} class="cursor-layer" class:visible aria-hidden="true">
 		<div class="body" bind:this={layerBody}>
-			<img
-				class="image"
-				class:show={!!content?.image}
-				{...imageProps(lastImage, { sizes: '240px' })}
-				alt=""
-			/>
+			{#if lastImage && lastLayer === 'behind'}
+				<img
+					class="image"
+					class:show={!!content?.image}
+					{...imageProps(lastImage, { sizes: '240px' })}
+					alt=""
+				/>
+			{/if}
+			{#if lastIconBehind}{@render iconSpan()}{/if}
 		</div>
 	</div>
 {/if}
+
+{#snippet iconSpan()}
+	<span
+		class="icon {content?.iconSize ?? 'sm'}"
+		class:show={!!iconName}
+		style="mask-image: url('/icons/{lastIcon}.svg'); background: {content?.iconColor ??
+			'currentColor'}"
+	></span>
+{/snippet}
 
 <style lang="scss">
 	@use 'base/mixins';
@@ -347,6 +358,10 @@
 
 		&.lg {
 			--icon-size: 6ch;
+		}
+
+		&.xl {
+			--icon-size: 9ch;
 		}
 
 		&.show {

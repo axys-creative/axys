@@ -1,0 +1,68 @@
+{
+	"logo": {
+		"src": "/images/logo-axys-mark.svg",
+		"tint": true,
+		"text": "axys creative",
+		"alt": "axys creative"
+	},
+	"links": [
+		{
+			"text": "Home",
+			"url": "/",
+			"accent": "pink"
+		},
+		{
+			"text": "Work",
+			"url": "/#work",
+			"accent": "green"
+		},
+		{
+			"text": "Benefits",
+			"url": "/#benefits",
+			"accent": "blue"
+		},
+		{
+			"text": "Plans",
+			"url": "/#plans",
+			"accent": "coral"
+		},
+		{
+			"text": "FAQs",
+			"url": "/#faq",
+			"accent": "yellow"
+		}
+	],
+	"footerLinks": [
+		{
+			"text": "Client Login",
+			"url": "https://billing.stripe.com/p/login/bIYcNw7NXeQDchi000",
+			"newTab": true,
+			"icon": "login",
+			"accent": "green"
+		},
+		{
+			"text": "Our Policies",
+			"url": "/policies",
+			"icon": "file",
+			"accent": "yellow"
+		}
+	],
+	"socialLabel": "Social [Media]{.secondary}",
+	"socialLinks": [
+		{
+			"title": "Instagram",
+			"label": "Ig",
+			"url": "https://www.instagram.com/axyscreative/"
+		},
+		{
+			"title": "X (Twitter)",
+			"label": "X",
+			"url": "https://twitter.com/AXYSCreative"
+		},
+		{
+			"title": "Dribbble",
+			"label": "Db",
+			"url": "https://dribbble.com/axyscreative"
+		}
+	]
+}

@@ -16,6 +16,8 @@ export type GlitchHoverOptions = {
 	/** The element whose text scrambles: a selector inside, or an element. Defaults to a `.label` (as in Button), else the element itself. */
 	target?: string | HTMLElement;
 	chars?: ScrambleChars;
+	/** Pin the text to its natural width so the scramble cannot shift the layout. Turn off where nothing sits beside it. */
+	lockWidth?: boolean;
 	duration?: number;
 	revealDelay?: number;
 };
@@ -26,6 +28,7 @@ export function glitchHover({
 	out = false,
 	target: targetOption,
 	chars,
+	lockWidth: lock = true,
 	duration = 0.5,
 	revealDelay = 0.125
 }: GlitchHoverOptions = {}): Attachment<HTMLElement> {
@@ -44,7 +47,7 @@ export function glitchHover({
 		el.classList.add('glitch-hover');
 		if (target !== el) target.classList.add('glitch-hover__text');
 		// A new message changes the width on purpose, so only the same-text version is pinned.
-		const unlock = newText ? undefined : lockWidth(target);
+		const unlock = newText || !lock ? undefined : lockWidth(target);
 
 		const glitchTo = (text: string) => {
 			target.textContent = text;

@@ -1,7 +1,11 @@
 import type { Component } from 'svelte';
 import globalCss from '../../styles/styles.scss?inline';
 import CarouselSpotlight from '$lib/sections/carousel-spotlight.svelte';
+import CommonQuestions from '$lib/sections/common-questions.svelte';
+import HeroDotsLogo from '$lib/sections/hero-dots-logo.svelte';
 import HeroSimple from '$lib/sections/hero-simple.svelte';
+import PlanSelection from '$lib/sections/plan-selection.svelte';
+import WorkGallery from '$lib/sections/work-gallery.svelte';
 import { mountPreview, type PreviewHost } from './preview-host.svelte';
 
 type Data = Record<string, unknown>;
@@ -32,6 +36,29 @@ const previews: Record<string, Preview> = {
 				autoplay: false
 			};
 		}
+	},
+	common_questions: {
+		component: CommonQuestions as unknown as Section,
+		props: (data) => ({ ...data, items: data.items ?? [] })
+	},
+	hero_dots_logo: {
+		component: HeroDotsLogo as unknown as Section,
+		props: (data) => {
+			const cta = (data.cta ?? {}) as { primary?: unknown; secondary?: { text?: string } };
+			return {
+				...data,
+				words: data.words ?? [],
+				cta: { ...cta, secondary: cta.secondary?.text ? cta.secondary : undefined }
+			};
+		}
+	},
+	plan_selection: {
+		component: PlanSelection as unknown as Section,
+		props: (data) => ({ ...data, plans: data.plans ?? [] })
+	},
+	work_gallery: {
+		component: WorkGallery as unknown as Section,
+		props: (data) => ({ ...data, items: data.items ?? [] })
 	},
 	hero_simple: {
 		component: HeroSimple as unknown as Section,

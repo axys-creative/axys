@@ -5,9 +5,9 @@
 	"footerTemplate": "simple",
 	"author": "Sample Author",
 	"contactEmail": "info@sample.com",
-	"themeColor": "#0a0a0a",
+	"themeColor": "#101010",
 	"faviconLight": "/images/favicon-light-theme.svg",
 	"faviconDark": "/images/favicon-dark-theme.svg",
-	"description": "",
-	"ogImage": ""
+	"description": "Unlock unlimited web design and development services. Subscribe for responsive, user-friendly websites optimized for accessibility and performance.",
+	"ogImage": "/public/axys-creative-og.png"
 }

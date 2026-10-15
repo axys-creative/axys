@@ -1,4 +1,5 @@
 <script module lang="ts">
+	import type { Snippet } from 'svelte';
 	import type { ButtonProps } from './button.svelte';
 	import type { HeaderNavProps } from './header-types';
 
@@ -23,6 +24,8 @@
 		strapIcon?: string;
 		/** Shows the buttons beside the menu button from the `lg` breakpoint up. Only with the `controls` layout. */
 		showCtas?: boolean;
+		/** Replaces the built-in navigation panel. Gets its `id` (for `aria-controls`), whether it is `open`, and `close`. */
+		navigation?: Snippet<[{ id: string; open: boolean; close: () => void }]>;
 	};
 </script>
 
@@ -56,7 +59,8 @@
 		mobileNav = 'slide',
 		strapIcon = 'orbit',
 		navSurface = 'solid',
-		showCtas = true
+		showCtas = true,
+		navigation
 	}: HeaderAbsoluteProps = $props();
 
 	const id = $props.id();
@@ -129,18 +133,22 @@ so a link or button anywhere else on the page stays clickable, even right under 
 	</div>
 </header>
 
-<SiteNav
-	id={navId}
-	{open}
-	{links}
-	{footerLinks}
-	{socialLinks}
-	always={desktopLayout === 'controls'}
-	variant={mobileNav}
-	{strapIcon}
-	surface={navSurface}
-	onlink={close}
-/>
+{#if navigation}
+	{@render navigation({ id: navId, open, close })}
+{:else}
+	<SiteNav
+		id={navId}
+		{open}
+		{links}
+		{footerLinks}
+		{socialLinks}
+		always={desktopLayout === 'controls'}
+		variant={mobileNav}
+		{strapIcon}
+		surface={navSurface}
+		onlink={close}
+	/>
+{/if}
 
 <style lang="scss">
 	@use 'base/mixins';

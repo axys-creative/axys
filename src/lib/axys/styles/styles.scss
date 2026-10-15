@@ -1,0 +1,16 @@
+@use 'template';
+
+// Base
+// prettier-ignore
+@import "variables.scss",
+ "mixins.scss",
+ "globals.scss",
+ "animations.scss",
+ "utility.scss";
+
+// Pages
+// prettier-ignore
+@import "./pages/home",
+ "./pages/404",
+ "./pages/policies",
+ "./pages/tokens";

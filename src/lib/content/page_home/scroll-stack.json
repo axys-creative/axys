@@ -1,0 +1,38 @@
+{
+	"title": "Member Benefits [✺]{.primary}",
+	"description": "The concept is simple. We replace unreliable freelancers and expensive agencies for one flat monthly fee. With swift turnaround times, you won't want to go anywhere else.",
+	"cta": {
+		"primary": { "text": "View Plans", "url": "#plans", "newTab": false },
+		"secondary": { "text": "Our Work", "url": "#work", "newTab": false }
+	},
+	"nav": true,
+	"size": "half",
+	"placement": "right",
+	"panels": [
+		{
+			"title": "Unlimited Services",
+			"description": "Gain access to endless design and development services. Simply put in a ticket in Trello to get started. Please be aware that each request is worked on and delivered one by one.",
+			"icon": "infinity"
+		},
+		{
+			"title": "Swift Delivery",
+			"description": "Get designs or sections of your website generally within 1-2 business days (M-F). Please be aware that some websites can take weeks or even months to complete depending on their size and complexity.",
+			"icon": "bolt"
+		},
+		{
+			"title": "Easy Management",
+			"description": "Keeping track of progress is made easy with Trello. Simply sign in from your computer or phone to create and manage tasks, then watch as your requests are completed and delivered.",
+			"icon": "inventory"
+		},
+		{
+			"title": "Fixed Pricing",
+			"description": "Don’t worry about inconsistent pricing that fluctuates throughout the year. Once signed up, your prices are locked in, ensuring you always know what to expect month to month.",
+			"icon": "price-tag"
+		},
+		{
+			"title": "Pause Anytime",
+			"description": "No contracts, ever. We understand that your workload may change, so feel free to pause or cancel anytime. \"Pausing\" stops all charges and allows for quick start up again while keeping your rate locked in.",
+			"icon": "pause"
+		}
+	]
+}

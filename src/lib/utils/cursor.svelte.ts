@@ -20,8 +20,10 @@ export type CursorContent = {
 	message?: string;
 	/** An icon name from `static/icons`, or `true` for the cursor's default icon. */
 	icon?: string | true;
-	iconSize?: 'sm' | 'md' | 'lg';
+	iconSize?: 'sm' | 'md' | 'lg' | 'xl';
 	iconColor?: string;
+	/** Whether the icon sits over the page (`front`, the default) or under the hovered element (`behind`). */
+	iconLayer?: 'front' | 'behind';
 	/** A picture shown inside the cursor, e.g. `/images/img-sample-1.jpg`. */
 	image?: string;
 	/** Whether the picture sits over the cursor's message and icon (`front`) or under them (`behind`, the default). */

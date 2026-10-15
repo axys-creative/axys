@@ -1,0 +1,701 @@
+.hero-section {
+	max-width: var(--content-width);
+	margin-inline: auto;
+	margin-block-start: 124px;
+	padding: 196px 0;
+
+	@include mq-max('xxl') {
+		padding: 124px 0;
+	}
+
+	@include mq-max('xl') {
+		margin-block-start: 96px;
+	}
+
+	.section-headline {
+		text-align: left;
+		margin-block-end: 116px;
+
+		@include mq-max('xxl') {
+			margin-block-end: 84px;
+		}
+
+		&__title {
+			// see 'h1, h2' in _globals.scss
+			display: flex;
+			flex-direction: column;
+
+			@include mq-max('md') {
+				margin-block-end: 12px;
+			}
+
+			.dynamic-text {
+				@include mq-motion-reduce {
+					display: none;
+				}
+			}
+
+			span {
+				&:last-of-type {
+					padding-inline-start: 240px;
+
+					@include mq-max('xxl') {
+						padding-inline-start: 200px;
+					}
+
+					@include mq-max('xl') {
+						padding-inline-start: 160px;
+					}
+
+					@include mq-max('md') {
+						padding-inline-start: 0;
+					}
+				}
+			}
+		}
+
+		&__subtitle {
+			font-size: 14px;
+			letter-spacing: 0.25px;
+			line-height: 120%;
+			display: inline-block;
+			color: $white;
+			translate: 0 -64px;
+
+			@include mq-max('xl') {
+				font-size: 12px;
+				translate: 0 -48px;
+			}
+
+			@include mq-max('md') {
+				translate: 0 0;
+				line-height: 112%;
+			}
+		}
+	}
+
+	.cta-wrapper {
+		margin-inline-start: 112px;
+
+		@include mq-max('xl') {
+			margin-inline-start: 96px;
+		}
+
+		@include mq-max('md') {
+			margin-inline-start: 0;
+		}
+	}
+}
+
+.work-section {
+	scroll-margin-block-start: -96px;
+
+	@include mq-max('xxl') {
+		scroll-margin-block-start: -24px;
+	}
+
+	span[data-title] {
+		color: $work-title-color;
+		display: inline-flex;
+	}
+
+	.work-showcase {
+		@include row-center;
+		flex-wrap: wrap;
+		gap: 24px;
+		margin: 96px auto;
+		width: min(var(--content-width), 100%);
+
+		@media all {
+			@include mq-max('xxl') {
+				margin: 64px auto;
+			}
+
+			@include mq-max('md') {
+				gap: 48px;
+			}
+		}
+
+		.showcase-link {
+			width: 48%;
+
+			&:hover,
+			&:focus-visible {
+				opacity: 1;
+
+				.showcase-item {
+					&::before,
+					&::after {
+						opacity: 1;
+					}
+
+					&::before {
+						translate: 0 0;
+						filter: blur(0);
+						transition: 0.4s ease;
+					}
+				}
+			}
+
+			@include mq-touch {
+				opacity: 1;
+			}
+
+			@include mq-max('md') {
+				width: 100%;
+			}
+
+			.showcase-item {
+				position: relative;
+				aspect-ratio: 3 / 2;
+
+				&::before,
+				&::after {
+					@include row-center;
+					position: absolute;
+					top: 0;
+					left: 0;
+					width: 100%;
+					aspect-ratio: 3 / 2;
+					opacity: 0;
+					transition: 0.3s ease;
+				}
+				&::after {
+					content: '';
+					background: rgba($black, 0.75);
+					border-radius: var(--radius);
+					// Spreads 1px past the frame so the picture's own edge cannot show around it.
+					box-shadow: 0 0 0 1px rgba($black, 0.75);
+				}
+				&::before {
+					content: 'Visit Site';
+					color: $white;
+					font-size: 24px;
+					font-weight: 700;
+					translate: 0 24px;
+					filter: blur(4px);
+					z-index: 1;
+
+					@media all {
+						@include mq-max('xl') {
+							font-size: 16px;
+						}
+
+						@include mq-max('md') {
+							font-size: 24px;
+						}
+
+						@include mq-max('sm') {
+							font-size: 16px;
+						}
+					}
+				}
+
+				.showcase-img {
+					@include swing-in(fade);
+					display: block;
+					width: 100%;
+					height: auto;
+					aspect-ratio: 3 / 2;
+					object-fit: cover;
+					border-radius: var(--radius);
+				}
+
+				.showcase-caption {
+					@include blur-in;
+					margin-block-start: 8px;
+					font-size: 18px;
+
+					@media all {
+						@include mq-max('xxl') {
+							font-size: 16px;
+						}
+
+						@include mq-max('xl') {
+							font-size: 14px;
+						}
+
+						@include mq-max('lg') {
+							font-size: 12px;
+						}
+
+						@include mq-max('md') {
+							font-size: 16px;
+						}
+
+						@include mq-max('sm') {
+							font-size: 14px;
+						}
+					}
+				}
+			}
+
+			&:nth-of-type(1),
+			&:nth-of-type(4) {
+				.showcase-item {
+					img {
+						background: #181818;
+					}
+				}
+			}
+		}
+	}
+
+	.made-with-care {
+		@include row-center;
+		font-size: 14px;
+
+		.heart-svg {
+			margin-inline-start: 4px;
+			margin-block-end: -1px;
+		}
+	}
+}
+
+.statement-section {
+	@include row-center;
+	text-align: center;
+	height: 80vh;
+
+	@media all {
+		@include mq-max('xxl') {
+			height: 64vh;
+		}
+
+		@include mq-max('xl') {
+			height: unset;
+			padding: 264px 0;
+		}
+
+		@include mq-max('sm') {
+			padding: 180px 0;
+		}
+	}
+
+	.mission-statement {
+		// Above the cursor's behind layer, so the keyword icons sit under every word.
+		position: relative;
+		z-index: 2;
+		font-size: 48px;
+
+		@media all {
+			@include mq-max('xxl') {
+				font-size: 36px;
+			}
+
+			@include mq-max('xl') {
+				font-size: 32px;
+			}
+
+			@include mq-max('lg') {
+				font-size: 24px;
+			}
+
+			@include mq-max('md') {
+				font-size: 5.4vw;
+			}
+
+			@include mq-max('sm') {
+				font-size: 5vw;
+			}
+		}
+
+		@include mq-mouse {
+			@include mq-motion-allow {
+				// Only the keywords dim the rest, not any word.
+				&:has(.statement-websites:hover, .statement-a11y:hover, .statement-seo:hover) {
+					.text {
+						opacity: 0.4;
+						transition: 0.3s ease;
+					}
+
+					.statement-websites,
+					.statement-a11y,
+					.statement-seo {
+						transition: 0.3s ease;
+
+						&:hover {
+							opacity: 1;
+						}
+					}
+				}
+			}
+		}
+
+		@include mq-motion-allow {
+			.text {
+				transition: 0.6s ease;
+			}
+		}
+
+		// The split words would take the global `*` color instead of their word's.
+		.text [class^='text-split'] {
+			color: inherit;
+		}
+	}
+}
+
+.benefits-section {
+	width: min(var(--content-width), 100%);
+	margin-inline: auto;
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+
+	@media all {
+		@include mq-max('lg') {
+			flex-direction: column;
+			align-items: center;
+			position: relative;
+		}
+	}
+
+	span[data-title] {
+		color: $benefits-title-color;
+		display: block;
+		width: 5em;
+	}
+
+	.headline-full {
+		position: sticky;
+		top: 33%;
+		width: 50%;
+
+		@media all {
+			@include mq-max('lg') {
+				position: static;
+				width: 92%;
+			}
+
+			@include mq-max('sm') {
+				width: 100%;
+			}
+		}
+
+		.section-headline {
+			text-align: left;
+		}
+	}
+
+	.benefit-list {
+		display: flex;
+		flex-direction: column;
+		gap: 128px;
+		width: 54%;
+		padding: 128px 0;
+
+		@media all {
+			@include mq-max('xxl') {
+				width: 50%;
+			}
+
+			@include mq-max('xl') {
+				padding: 64px 0 96px;
+			}
+
+			@include mq-max('lg') {
+				width: 92%;
+			}
+
+			@include mq-max('md') {
+				gap: 96px;
+			}
+
+			@include mq-max('sm') {
+				width: 100%;
+				gap: 64px;
+			}
+		}
+
+		.benefit-block {
+			width: 100%;
+			max-width: 672px;
+			transition: 0.6s ease;
+
+			@for $i from 1 through 10 {
+				&:nth-of-type(#{$i}) {
+					svg {
+						animation: glow 5s ease infinite #{$i * 0.4s} alternate-reverse;
+					}
+				}
+			}
+
+			.benefit-heading {
+				font-size: 48px;
+				font-weight: 100;
+				margin-block-end: 24px;
+				display: flex;
+				align-items: center;
+				gap: 24px;
+
+				@media all {
+					@include mq-max('xxl') {
+						font-size: 36px;
+						margin-block-end: 12px;
+					}
+
+					@include mq-max('xl') {
+						font-size: 32px;
+						gap: 12px;
+					}
+
+					@include mq-max('md') {
+						font-size: 24px;
+					}
+				}
+
+				svg {
+					width: 48px;
+					// filter: drop-shadow(0px 0px 4px rgba(255, 255, 255, 0.5));
+					// animation: glow 12s ease infinite alternate-reverse;
+
+					@include mq-max('md') {
+						width: 24px;
+					}
+
+					path {
+						fill: $benefits-title-color;
+					}
+				}
+			}
+
+			p {
+				font-size: 20px;
+				font-weight: 200;
+				line-height: 120%;
+				padding-inline-start: calc(48px + 24px);
+
+				@media all {
+					@include mq-max('xl') {
+						font-size: 16px;
+					}
+
+					@include mq-max('lg') {
+						padding-inline-start: 0;
+					}
+
+					@include mq-max('md') {
+						font-size: 14px;
+						letter-spacing: 0.25px;
+					}
+				}
+
+				.business-days {
+					font-size: 16px;
+
+					@include mq-max('xl') {
+						font-size: 14px;
+					}
+
+					@include mq-max('md') {
+						font-size: 12px;
+					}
+				}
+
+				.discount-benefit-text,
+				[data-discount] {
+					display: none;
+				}
+			}
+
+			&.in-view {
+				// Avoiding a11y ding for pagespeed.
+				opacity: 1 !important;
+				filter: blur(0) !important;
+			}
+
+			&.discount-styles {
+				--heading-color: #{$yellow};
+
+				.benefit-heading {
+					color: var(--heading-color);
+
+					svg {
+						path {
+							fill: var(--heading-color);
+						}
+					}
+				}
+
+				.discount-benefit-text,
+				[data-discount] {
+					display: block;
+					color: var(--heading-color);
+				}
+
+				time {
+					color: var(--heading-color);
+				}
+			}
+		}
+
+		&.in-view {
+			.benefit-block {
+				opacity: 0.1;
+				filter: blur($blur);
+			}
+		}
+	}
+
+	// Lines up with the title above it: the headline is 92% wide and centered here.
+	& > .cta-wrapper.lg-screen-and-below {
+		width: 92%;
+
+		@include mq-max('sm') {
+			width: 100%;
+		}
+	}
+}
+
+// The FAQ list is wider than the accordion's default text column, and each question has more room.
+#faq {
+	.questions {
+		max-width: 900px;
+	}
+
+	.trigger {
+		padding-block: 24px;
+	}
+}
+
+// The plan selection section, set to the site's content width and one line for its title.
+#plans.plan-selection {
+	.inner {
+		padding-inline: 0;
+	}
+
+	h2 {
+		white-space: nowrap;
+	}
+
+	.plan h3 {
+		font-size: 48px;
+
+		@include mq-max('md') {
+			font-size: 36px;
+		}
+	}
+}
+
+.client-logos {
+	display: none;
+}
+
+.pre-footer {
+	// Extended to 404 page. Be mindful of changes there as well.
+	@include column-center;
+
+	.pre-footer-title {
+		// Extended to 404 page.
+		@include row-center;
+		gap: 16px;
+		margin-block-end: 40px;
+
+		@include mq-max('md') {
+			gap: 12px;
+		}
+
+		h2 {
+			@media all {
+				@include mq-max('md') {
+					font-size: 40px;
+					margin-block-end: 0;
+				}
+
+				@include mq-max('sm') {
+					font-size: 28px;
+				}
+			}
+		}
+	}
+
+	.headline-description {
+		text-align: center;
+	}
+}
+
+// Components
+
+.toast {
+	--toast-padding: 16px;
+
+	background: $grey-dark;
+	position: fixed;
+	bottom: 12px;
+	right: 12px;
+	width: 448px;
+	aspect-ratio: 2 / 1;
+	border-radius: var(--radius);
+	padding: 56px var(--toast-padding) var(--toast-padding);
+	z-index: $z-index-toast;
+	translate: 0 120%;
+
+	@include mq-motion-allow {
+		transition: translate 0.5s ease;
+	}
+
+	@include mq-max('md') {
+		width: calc(100vw - calc($content-padding-md * 2));
+		right: 50%;
+		height: 200px;
+		padding-block-start: 48px;
+		translate: 50% 120%;
+	}
+
+	&-banner {
+		@include discount-card-banner(space-between, 8px 16px);
+
+		h2 {
+			@include discount-card-banner-text;
+			margin-block-end: 0;
+		}
+
+		.toast__close-btn {
+			@include row-center;
+			color: $black;
+			width: 16px;
+			height: 16px;
+			font-size: 32px;
+			translate: 0 -2px;
+			transition:
+				color 0.3s ease,
+				transform 0.4s $cubic-ease-back-dramatic;
+
+			&:hover,
+			&:focus-visible {
+				scale: 1.2;
+				color: $grey-light;
+			}
+		}
+	}
+
+	&-cta-group {
+		position: absolute;
+		left: calc(var(--toast-padding));
+		bottom: var(--toast-padding);
+
+		.cta-1 {
+			.cta-text {
+				background-color: $grey-dark;
+			}
+		}
+	}
+
+	&.display-toast {
+		translate: 0 0;
+
+		@include mq-max('md') {
+			translate: 50% 0;
+		}
+	}
+}
+
+// The marquee below the hero is the template's component; this gives it the site's title size.
+.presentation-content .marquee.axys-marquee {
+	@include title-font;
+	--gap: 0.25em;
+
+	// Full bleed: the page's side padding is pulled back by the translate set on every `.marquee`.
+	width: 100vw;
+	line-height: 1.3;
+}

@@ -1,0 +1,606 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	color: $white;
+	font-family: var(--font-family);
+	font-weight: 300;
+
+	&::selection {
+		color: $white;
+		background-color: rgba($coral, 0.75);
+	}
+
+	// Autofill for form fields: input, textarea, select, etc.
+	&:-webkit-autofill,
+	&:-webkit-autofill:hover,
+	&:-webkit-autofill:focus-visible {
+		-webkit-text-fill-color: $white;
+		-webkit-box-shadow: 0 0 0px 1000px $grey-dark inset;
+	}
+}
+
+html {
+	overflow-x: hidden; // Users with mouse (vs trackpad) have a horizontal scroll?
+	scroll-behavior: smooth;
+	// scrollbar-color: $coral transparent;
+}
+
+body {
+	background-color: $black;
+
+	.hero-section {
+		.section-headline__title span {
+			opacity: 0;
+			translate: 0 120%;
+			filter: blur($blur);
+		}
+		.section-headline__subtitle {
+			opacity: 0;
+			filter: blur($blur);
+		}
+		.cta-wrapper {
+			opacity: 0;
+			translate: 0 100%;
+		}
+	}
+
+	&:has(.load-complete) {
+		.hero-section {
+			.section-headline__title span {
+				opacity: 1;
+				translate: 0 0;
+				filter: blur(0);
+				transition: 0.75s ease;
+
+				@for $i from 1 through 5 {
+					&:nth-of-type(#{$i}) {
+						transition-delay: 0.05s * $i;
+					}
+				}
+			}
+			.section-headline__subtitle {
+				opacity: 1;
+				filter: blur(0);
+				transition: 0.8s ease 0.7s;
+			}
+			.cta-wrapper {
+				opacity: 1;
+				translate: 0 0;
+				transition: 0.75s ease 0.5s;
+			}
+		}
+
+		.toast {
+			@include mq-motion-allow {
+				transition-delay: 2s;
+			}
+
+			&[aria-hidden='true'] {
+				transition-delay: 0s;
+			}
+		}
+	}
+}
+
+main,
+footer,
+.width-constraint {
+	padding: 24px $content-padding;
+	max-width: $content-width;
+	margin: auto;
+
+	@include mq-max('md') {
+		padding: $content-padding-md;
+	}
+}
+
+section {
+	padding: 196px 0;
+
+	@include mq-max('xxl') {
+		padding: 124px 0;
+	}
+
+	@include mq-max('md') {
+		padding: 96px 0;
+	}
+
+	.section-headline {
+		text-align: center;
+
+		&__heading {
+			margin-block-end: 24px;
+
+			// @include mq-motion-allow {
+			//   opacity: 0.2;
+			//   filter: blur($blur);
+			//   transition: 0.6s ease;
+
+			//   &.in-view {
+			//     opacity: 1;
+			//     filter: blur(0);
+			//   }
+			// }
+		}
+	}
+
+	.headline-description {
+		font-size: 18px;
+		letter-spacing: 0.25px;
+		line-height: 120%;
+		margin-block-end: 64px;
+		text-wrap: balance;
+
+		@include mq-max('md') {
+			margin-block-end: 24px;
+			font-size: 16px;
+		}
+
+		@include mq-max('sm') {
+			font-size: 14px;
+		}
+	}
+}
+
+.presentation-content {
+	padding: 196px 0;
+
+	@include mq-max('xxl') {
+		padding: 124px 0;
+	}
+
+	@include mq-max('md') {
+		padding: 96px 0;
+	}
+}
+
+footer {
+	position: relative;
+	@include row-center(space-between);
+
+	@include mq-max('lg') {
+		@include column-center;
+	}
+
+	.return-to-top {
+		@include row-center;
+
+		@include no-motion-desktop-hover {
+			svg {
+				border: 2px solid $green;
+			}
+		}
+
+		@include mq-max('lg') {
+			display: none;
+		}
+
+		&:focus-visible {
+			svg {
+				border: 2px solid $green;
+			}
+		}
+
+		svg {
+			width: 36px;
+			height: 36px;
+			border-radius: 50%;
+			border: 2px solid transparent;
+			margin-block-end: -4px;
+			margin-inline-end: 8px;
+			transition:
+				0.4s $cubic-ease-back-dramatic,
+				border 0.3s ease;
+		}
+	}
+
+	.email-us {
+		display: none;
+
+		@include mq-max('lg') {
+			@include column-start;
+			translate: -36px 0;
+			gap: 24px;
+			margin-block-end: 64px;
+		}
+
+		@include mq-max('md') {
+			margin: 96px 0;
+		}
+
+		@include mq-max('sm') {
+			margin: 48px 0 96px;
+		}
+
+		.email-us-text {
+			@include row-center;
+			gap: 6px;
+			font-size: 24px;
+		}
+
+		.email-us-link {
+			font-size: 20px;
+			transition: 0.3s ease;
+
+			&:hover {
+				color: $green;
+			}
+		}
+
+		.email-us-icon {
+			margin-inline-start: 8px;
+			width: 24px;
+			height: 24px;
+		}
+	}
+
+	.copyright {
+		@include row-center;
+		gap: 10px;
+		position: absolute;
+		bottom: 50%;
+		left: 50%;
+		translate: calc(-49% + 0.5px) 50%;
+		font-size: 12px;
+		letter-spacing: 0.5px;
+
+		@include mq-max('lg') {
+			width: 100%;
+			bottom: $content-padding;
+			translate: calc(-49% - 6px) 0;
+		}
+
+		@include mq-max('md') {
+			font-size: 10px;
+			translate: calc(-49% - 1px) 0;
+		}
+	}
+
+	.footer-social {
+		// see global class '.social-media-container' for full shared styles
+		translate: 0 -22px;
+
+		@include mq-max('lg') {
+			translate: -36px 0;
+			margin-block-end: 128px;
+		}
+
+		@include mq-max('md') {
+			margin-block-end: 196px;
+		}
+
+		&:hover,
+		&:focus-within {
+			.social-media-title {
+				@include mq-max('md') {
+					translate: 0 12px;
+				}
+			}
+		}
+
+		.social-media-title {
+			translate: 0 52px;
+
+			@include mq-max('lg') {
+				font-size: 24px;
+			}
+
+			@include mq-max('md') {
+				translate: 0 12px;
+			}
+			@include mq-touch {
+				translate: 0 12px;
+			}
+
+			svg {
+				@include mq-max('lg') {
+					width: 24px;
+					height: 24px;
+				}
+			}
+		}
+
+		.social-media-links {
+			@include mq-max('lg') {
+				justify-content: flex-start;
+				gap: $social-media-links-spacing-sm;
+				translate: -8px 0;
+			}
+		}
+	}
+}
+
+h1,
+h2 {
+	@include title-font;
+}
+
+h2 {
+	font-size: 72px;
+
+	@include mq-max('xxl') {
+		font-size: 64px;
+	}
+
+	@include mq-max('xl') {
+		font-size: 56px;
+	}
+
+	@include mq-max('md') {
+		font-size: calc(12px + 6.4vw);
+	}
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	line-height: 1;
+}
+
+a {
+	text-decoration: none;
+}
+
+strong {
+	font-weight: 900;
+}
+
+button {
+	background: none;
+	border: none;
+	cursor: pointer;
+}
+
+img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+ul {
+	list-style: none;
+
+	&.classic-list {
+		list-style-type: circle;
+		margin-block: 12px;
+		margin-inline-start: 20px;
+
+		li {
+			font-size: 16px;
+
+			@include mq-max('xxl') {
+				font-size: 14px;
+				letter-spacing: 0.25px;
+			}
+		}
+	}
+}
+
+summary {
+	cursor: pointer;
+}
+
+code {
+	font-family: 'Courier New', Courier, monospace;
+	font-size: 14px;
+	padding: 8px;
+	border-radius: 4px;
+	background-color: $grey-dark;
+	white-space: nowrap;
+	margin-block-start: 2px;
+	display: inline-flex;
+}
+
+.cta-wrapper {
+	display: flex;
+	gap: 20px;
+}
+
+.social-media-container {
+	&:hover,
+	&:focus-within {
+		.social-media-title {
+			translate: 0 0;
+		}
+
+		.social-media-links {
+			.social-media-link {
+				opacity: 1;
+				pointer-events: all;
+			}
+
+			li {
+				&:nth-of-type(1) {
+					.social-media-link {
+						transition:
+							0.3s ease,
+							opacity 0.3s ease 0.05s;
+					}
+				}
+
+				&:nth-of-type(2) {
+					.social-media-link {
+						transition:
+							0.3s ease,
+							opacity 0.3s ease 0.1s;
+					}
+				}
+
+				&:nth-of-type(3) {
+					.social-media-link {
+						transition:
+							0.3s ease,
+							opacity 0.3s ease 0.15s;
+					}
+				}
+
+				&:nth-of-type(4) {
+					.social-media-link {
+						transition:
+							0.3s ease,
+							opacity 0.3s ease 0.2s;
+					}
+				}
+			}
+		}
+	}
+
+	.social-media-title {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		margin-block-end: 24px;
+		transition: 0.3s ease;
+		// translate: unique per instance
+
+		@include mq-max('md') {
+			translate: 0 12px;
+		}
+		@include mq-touch {
+			translate: 0 12px;
+		}
+
+		.blue-text {
+			margin: 0 6px;
+		}
+
+		svg {
+			width: 18px;
+			height: 18px;
+
+			// @include mq-max("sm") {
+			//   display: none;
+			// }
+		}
+	}
+
+	.social-media-links {
+		@include row-center(space-between);
+		gap: 24px;
+
+		@include mq-max('xxl') {
+			gap: 16px;
+		}
+
+		@include mq-max('lg') {
+			gap: 0;
+		}
+
+		li {
+			transition: 0.4s $cubic-ease-back-dramatic;
+		}
+
+		.social-media-link {
+			border: 2px solid transparent;
+			@include row-center;
+			width: 36px;
+			height: 36px;
+			border-radius: 50%;
+			opacity: 0;
+			pointer-events: none;
+			transition: 0.3s ease;
+			// transition is set above (:hover) to allow for individual delay
+
+			@include no-motion-desktop-hover {
+				border-color: $blue;
+			}
+
+			&:hover,
+			&:focus-visible {
+				color: $blue;
+			}
+
+			&:focus-visible {
+				border-color: $blue;
+			}
+
+			@include mq-max('md') {
+				opacity: 1;
+			}
+
+			@include mq-touch {
+				opacity: 1;
+			}
+		}
+	}
+}
+
+.marquee {
+	overflow: hidden;
+	width: 100vw;
+	max-width: $content-width;
+	translate: calc($content-padding * -1) 0;
+
+	@include mq-max('md') {
+		translate: calc($content-padding-md * -1) 0;
+	}
+
+	&-inner,
+	&-inner-logos {
+		padding-inline-end: 24px; // Offsets to allow a smooth marquee at 50%, instead of 50.3%
+		display: flex;
+		align-items: center;
+		width: fit-content;
+
+		@include mq-max('sm') {
+			padding-inline-end: 12px;
+		}
+	}
+
+	&-inner-logos {
+		padding-inline-end: 0; // undo the offset above
+	}
+
+	.marquee-text {
+		@include title-font;
+		line-height: 100%;
+		display: flex;
+		// margin: 0;
+		gap: 24px;
+
+		@include mq-max('xxl') {
+			gap: 18px;
+		}
+
+		@include mq-max('md') {
+			line-height: 86%;
+			gap: 12px;
+		}
+
+		@include mq-max('sm') {
+			line-height: 80%;
+			gap: 6px;
+		}
+	}
+
+	.marquee-img {
+		object-fit: contain;
+		width: 124px;
+		height: 48px;
+
+		@include mq-max('md') {
+			width: 96px;
+		}
+	}
+
+	.marquee-dot {
+		font-size: 36px;
+		color: $grey-light;
+		margin: 0 56px;
+		user-select: none;
+
+		@include mq-max('md') {
+			font-size: 24px;
+			margin: 0 24px;
+		}
+	}
+}
+
+// FromSwift PDF Editor. Browser Extension — See chrome store
+.formswift-button {
+	display: none; // There's nothing for them to sign / open (link will do this)
+}
