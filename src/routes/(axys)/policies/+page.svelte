@@ -11,7 +11,7 @@
 	<article>
 		<header class="policies-page__header">
 			<div class="heading-title">
-				<h1>our <strong>policies</strong></h1>
+				<h1>Our Policies</h1>
 				<div class="policies-svg">
 					<svg
 						width="56"
@@ -35,10 +35,10 @@
 				</div>
 			</div>
 			<div class="header-text">
-				<h2>axys creative</h2>
+				<h2>AXYS Creative</h2>
 
 				<div>
-					<small>Last updated — January 1, 2025</small>
+					<small>Last updated — October 15, 2026</small>
 					<a
 						href="/documents/policies-axys-creative.pdf"
 						class="classic-link tab-element-page"
@@ -241,7 +241,7 @@
 			</p>
 		</section>
 		<section class="policies policies-9" id="billing-and-payments">
-			<h2 class="policies-title">9. Billing and payments</h2>
+			<h2 class="policies-title">9. Billing and Payments</h2>
 			<p>
 				AXYS Creative uses
 				<a href="https://stripe.com/" target="_blank" class="classic-link tab-element-page">
@@ -408,35 +408,8 @@
 				relationship between the Client and AXYS Creative.
 			</p>
 		</section>
-		<section class="policies policies-21" id="referral-program">
-			<h2 class="policies-title">21. Referral Program</h2>
-			<p>
-				The AXYS Creative Referral Program offers a commission-based reward for each successful
-				business referral made to us. To qualify for the 10% recurring monthly commission, the
-				referred client must successfully subscribe to one of our services. There is no limit to the
-				number of referrals an individual can make. Referrers earn a 10% recurring monthly
-				commission based on the subscription price of the referred client’s membership. The
-				commission will be paid monthly as long as the referred client remains subscribed to AXYS
-				Creative services. If the referred client pauses or cancels their membership, all related
-				commission payouts will cease immediately; however, if the client resumes their plan,
-				commission payouts will resume as well.
-
-				<br aria-hidden="true" />
-				<br aria-hidden="true" />
-
-				Referral tracking and payouts are managed through our third-party partner,
-				<a class="classic-link tab-element-page" href="https://rewardful.com" target="_blank">
-					Rewardful
-				</a>. It is the referrer’s responsibility to ensure that their referral is properly tracked
-				and reported through Rewardful to qualify for commissions. AXYS Creative is not liable for
-				any delays or errors in tracking or payouts caused by Rewardful. AXYS Creative reserves the
-				right to modify or terminate the referral program at any time without prior notice. Any
-				commissions earned before such changes will still be honored under the terms in place at the
-				time of the referral.
-			</p>
-		</section>
-		<section class="policies policies-22">
-			<h2 class="policies-title">22. Contact Information</h2>
+		<section class="policies policies-21">
+			<h2 class="policies-title">21. Contact Information</h2>
 			<p>
 				Should you have any questions or inquiries, please feel free to reach out to AXYS Creative
 				at the following email address:

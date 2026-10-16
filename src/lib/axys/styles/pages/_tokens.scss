@@ -1,4 +1,6 @@
 .tokens-header {
+	width: min(var(--content-width), 100%);
+	margin-inline: auto;
 	margin-block: 24px;
 
 	&:first-of-type {
@@ -22,21 +24,8 @@
 		text-align: center;
 
 		.scroll-glitch {
-			width: 396px;
-
-			@media all {
-				@include mq-max('xxl') {
-					width: 332px;
-				}
-
-				@include mq-max('xl') {
-					width: 264px;
-				}
-
-				@include mq-max('md') {
-					width: calc(64px + 24vw);
-				}
-			}
+			justify-content: center;
+			width: 3.3em;
 		}
 	}
 
@@ -58,6 +47,8 @@
 }
 
 .table {
+	width: min(var(--content-width), 100%);
+	margin-inline: auto;
 	$table-border: 1px solid $grey-light;
 
 	@include column-start;
@@ -70,21 +61,30 @@
 
 	.table-block {
 		display: flex;
+		flex-wrap: wrap;
 		width: 100%;
 		border-bottom: $table-border;
 
-		&:first-of-type {
-			div {
-				font-weight: 700;
-				color: $yellow;
+		&:first-child div {
+			font-size: 22px;
+			line-height: 1.3;
+			font-weight: 500;
+
+			@include mq-max('md') {
+				font-size: 16px;
 			}
+		}
+
+		&:nth-child(even) {
+			background: rgb(255 255 255 / 0.04);
+			backdrop-filter: blur(12px);
 		}
 
 		&:last-of-type {
 			border: none;
 		}
 
-		div {
+		:where(div) {
 			padding: 12px;
 
 			@include mq-max('md') {
@@ -100,14 +100,60 @@
 		}
 
 		&__info {
-			flex: 1;
+			flex: 3;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 12px;
 			border-right: $table-border;
-		}
-		&__details {
-			flex: 2.25;
 
-			@include mq-max('md') {
-				flex: 5;
+			code {
+				overflow-wrap: anywhere;
+			}
+		}
+
+		&__copy {
+			flex: none;
+			will-change: scale;
+			opacity: 0;
+			transition:
+				opacity 0.2s ease,
+				background var(--duration) var(--ease),
+				color var(--duration) var(--ease),
+				border-color var(--duration) var(--ease),
+				scale var(--duration) var(--ease);
+
+			@media (hover: none) {
+				opacity: 1;
+			}
+		}
+
+		&:hover .table-block__copy,
+		&:focus-within .table-block__copy,
+		&__copy[data-copied] {
+			opacity: 1;
+		}
+
+		&__details {
+			flex: 2;
+		}
+
+		&__preview {
+			@include subtitle-font;
+			flex: 1 0 100%;
+			padding-block: 24px;
+			border-top: $table-border;
+		}
+
+		@include mq-max('md') {
+			&__info {
+				flex: 1 0 100%;
+				border-right: none;
+				border-bottom: $table-border;
+			}
+
+			&__details {
+				flex: 1 0 100%;
 			}
 		}
 	}

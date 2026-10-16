@@ -2,6 +2,77 @@
 	import Footer from '$lib/axys/footer.svelte';
 	import { glitchScroll } from '$lib/attachments/glitch-scroll';
 
+	import CopyButton from '$lib/components/copy-button.svelte';
+	import RichText from '$lib/components/rich-text.svelte';
+
+	type TokenRow = { code: string; description: string; example: string };
+
+	const lineBreak: TokenRow[] = [
+		{
+			code: '{.br}',
+			description: 'Starts a new line. Everything after it moves down.',
+			example: 'First line{.br}Second line'
+		}
+	];
+
+	const classes: TokenRow[] = [
+		{
+			code: '[words]{.primary}',
+			description: 'Colors the words with the main accent color.',
+			example: 'Make it [pop]{.primary}'
+		},
+		{
+			code: '[words]{.secondary}',
+			description: 'Colors the words with the secondary color.',
+			example: 'Make it [pop]{.secondary}'
+		},
+		{
+			code: '[words]{.strong}',
+			description: 'Makes the words bold.',
+			example: 'Make it [bold]{.strong}'
+		},
+		{
+			code: '[words]{.italic}',
+			description: 'Slants the words.',
+			example: 'Make it [slanted]{.italic}'
+		},
+		{
+			code: '[words]{.stroke}',
+			description: 'Outlines the words and leaves the inside empty.',
+			example: 'Make it [outlined]{.stroke}'
+		},
+		{
+			code: '[words]{.underline}',
+			description: 'Underlines the words.',
+			example: 'Make it [count]{.underline}'
+		},
+		{
+			code: '[words]{.scribble}',
+			description: 'Draws a hand-drawn underline beneath the words as they scroll into view.',
+			example: 'Make it [count]{.scribble}'
+		},
+		{
+			code: '[words]{.scribble-circle}',
+			description: 'Draws a hand-drawn circle around the words as they scroll into view.',
+			example: 'Make it [count]{.scribble-circle}'
+		},
+		{
+			code: '[words]{.scribble-circle-tight}',
+			description: 'A circle that sits closer to the words.',
+			example: 'Make it [count]{.scribble-circle-tight}'
+		},
+		{
+			code: '[words]{.scribble-circle-wide}',
+			description: 'A circle that sits farther from the words.',
+			example: 'Make it [count]{.scribble-circle-wide}'
+		},
+		{
+			code: '[words]{.primary .scribble}',
+			description: 'Combine classes by listing them in the same braces.',
+			example: 'Make it [count]{.primary .scribble}'
+		}
+	];
+
 	const titleGlitch = glitchScroll({ mono: false, start: 'top bottom', end: 'bottom top' });
 
 	const schema = `<script type="application/ld+json">${JSON.stringify({
@@ -55,38 +126,27 @@
 			<h2
 				class="sub-title scroll-glitch green-text"
 				aria-label="Tokens"
-				data-title="tokens"
+				data-title="Tokens"
 				{@attach titleGlitch}
 			>
-				tokens
+				Tokens
 			</h2>
 			<p class="tokens-header__description">
-				Tokens can be used anywhere text can be added. The syntax is as follows:
+				Tokens work in any text field in the admin. Wrap the words in square brackets, then add one
+				or more classes in curly braces:
 				<span class="space"></span>
-				<code>[%%]</code>
+				<code>[words]&lbrace;.class&rbrace;</code>
 			</p>
 		</div>
 
-		<div class="table">
-			<div class="table-block">
-				<div class="table-block__info">Token</div>
-				<div class="table-block__details">Description</div>
+		<div class="table" role="table">
+			<div class="table-block" role="row">
+				<div class="table-block__info" role="columnheader">Token</div>
+				<div class="table-block__details" role="columnheader">Description</div>
 			</div>
-
-			<div class="table-block">
-				<div class="table-block__info">[%br%]</div>
-				<div class="table-block__details">
-					Create a line break in the text. All content following this token will start on a new
-					line.
-				</div>
-			</div>
-			<div class="table-block">
-				<div class="table-block__info">[%span%] [%span%]</div>
-				<div class="table-block__details">
-					Wrap text within an html span tag. Great for styling individual characters, words, or
-					sentences.
-				</div>
-			</div>
+			{#each lineBreak as row (row.code)}
+				{@render tokenRow(row)}
+			{/each}
 		</div>
 
 		<div class="tokens-header">
@@ -94,50 +154,46 @@
 			<h2
 				class="sub-title scroll-glitch blue-text"
 				aria-label="Classes"
-				data-title="classes"
+				data-title="Classes"
 				{@attach titleGlitch}
 			>
-				classes
+				Classes
 			</h2>
 			<p class="tokens-header__description">
-				Classes can be added to any tokens using dot notation. For example:
+				Stack as many classes as you like inside the braces, separated by spaces. For example:
 				<span class="space"></span>
-				<code> [%br.md-up%]</code>
-				or
-				<code> [%span.underline%]Your text[%span%]</code>
+				<code>[words]&lbrace;.primary .scribble&rbrace;</code>
 			</p>
 		</div>
 
-		<div class="table">
-			<div class="table-block">
-				<div class="table-block__info">Class</div>
-				<div class="table-block__details">Description</div>
+		<div class="table" role="table">
+			<div class="table-block" role="row">
+				<div class="table-block__info" role="columnheader">Token</div>
+				<div class="table-block__details" role="columnheader">Description</div>
 			</div>
-
-			<div class="table-block">
-				<div class="table-block__info">.underline</div>
-				<div class="table-block__details">Add an underline beneath your text.</div>
-			</div>
-			<div class="table-block">
-				<div class="table-block__info">.text-stroke</div>
-				<div class="table-block__details">
-					Add an outline stroke to your text, setting the inner fill to transparent.
-				</div>
-			</div>
-			<div class="table-block">
-				<div class="table-block__info">.md-up</div>
-				<div class="table-block__details">
-					Only display your token on screens 769px wide and larger.
-				</div>
-			</div>
-			<div class="table-block">
-				<div class="table-block__info">.lg-up</div>
-				<div class="table-block__details">
-					Only display your token on screens 1025px wide and larger.
-				</div>
-			</div>
+			{#each classes as row (row.code)}
+				{@render tokenRow(row)}
+			{/each}
 		</div>
 	</section>
 </main>
+
+{#snippet tokenRow(row: TokenRow)}
+	<div class="table-block" role="row">
+		<div class="table-block__info" role="cell">
+			<code>{row.code}</code>
+			<CopyButton
+				class="table-block__copy"
+				text={row.code}
+				label="Copy"
+				copiedText="Copied"
+				type="outline"
+				size="sm"
+			/>
+		</div>
+		<div class="table-block__details" role="cell">{row.description}</div>
+		<div class="table-block__preview" role="cell"><RichText text={row.example} /></div>
+	</div>
+{/snippet}
 
 <Footer email="hello@axyscreative.com" />

@@ -8,7 +8,8 @@ export const richTextClasses = [
 	'scribble-circle-wide',
 	'secondary',
 	'stroke',
-	'strong'
+	'strong',
+	'underline'
 ] as const;
 
 const TOKEN = /\[([^[\]]*)\]\{((?:\.[\w-]+\s*)+)\}/g;
@@ -26,7 +27,12 @@ export function richTextToken(inner: string, names: string) {
 
 	const classes = [...used]
 		.filter(
-			(name) => name === 'italic' || name === 'primary' || name === 'secondary' || name === 'stroke'
+			(name) =>
+				name === 'italic' ||
+				name === 'primary' ||
+				name === 'secondary' ||
+				name === 'stroke' ||
+				name === 'underline'
 		)
 		.map((name) => `rich-text--${name}`);
 	const drawn = [...used].find((name) => name.startsWith('scribble'));

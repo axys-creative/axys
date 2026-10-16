@@ -1,10 +1,21 @@
 .policies-page {
-	max-width: 1440px;
-	margin: 180px auto;
+	margin-block: 248px 180px;
 
 	@include mq-max('xxl') {
-		max-width: 1024px;
-		margin: 140px auto;
+		margin-block: 212px 140px;
+	}
+
+	@include mq-max('xl') {
+		margin-block: 164px 140px;
+	}
+
+	@include mq-max('md') {
+		margin-block: 180px 140px;
+	}
+
+	article {
+		width: min(var(--content-width), 100%);
+		margin-inline: auto;
 	}
 
 	a {

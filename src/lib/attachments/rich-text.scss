@@ -14,3 +14,9 @@
 	color: transparent;
 	-webkit-text-stroke: 1px var(--color-text);
 }
+
+.rich-text--underline {
+	text-decoration: underline;
+	text-decoration-thickness: 0.08em;
+	text-underline-offset: 0.15em;
+}

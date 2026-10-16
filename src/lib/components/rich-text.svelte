@@ -1,6 +1,6 @@
 <script module lang="ts">
 	export type RichTextProps = {
-		/** Plain text. `[words]{.primary .scribble}` styles words, `{.br}` is a line break. Classes: `italic`, `primary`, `scribble`, `secondary`, `stroke`, `strong`. */
+		/** Plain text. `[words]{.primary .scribble}` styles words, `{.br}` is a line break. Classes: `italic`, `primary`, `scribble`, `secondary`, `stroke`, `strong`, `underline`. */
 		text: string;
 		class?: string;
 	};

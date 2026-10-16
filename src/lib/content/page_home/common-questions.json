@@ -6,7 +6,7 @@
 	"items": [
 		{
 			"title": "What services do you offer?",
-			"content": "We specialize in designing and developing unique websites made for user experience, accessibility, performance, and search engine optimization.{.br}{.br}We provide these solutions through:{.br}{.br}• Custom Website Design{.br}• Website Development (HTML, CSS, JS){.br}• Website Maintenance & Support (CMS available){.br}• UX/UI Design"
+			"content": "We specialize in designing and developing unique websites made for user experience, accessibility, performance, and search engine optimization.{.br}{.br}We use AI, but with a human touch: it speeds up the groundwork, while every design and line of code is still directed, reviewed, and refined by a person."
 		},
 		{
 			"title": "Why wouldn't I just hire in-house?",
@@ -35,10 +35,6 @@
 		{
 			"title": "How do I make a request and track progress?",
 			"content": "This is done with Trello, a user-friendly managing tool that makes communication and collaboration simple. In addition to describing the work needed, you can also upload images, videos, documents, or links to other resources."
-		},
-		{
-			"title": "How does the referral program work?",
-			"content": "If you refer a client to axys and they subscribe to one of our plans, you’ll earn 10% recurring monthly commission based on the current subscription amount they chose. Your commission will end when the referred client pauses or cancels their membership, but will start up again if the client resumes their plan. There’s no limit to the number of clients you can refer. You’ll earn commissions for every successful referral that subscribes to axys services. Referral tracking and payouts are handled by our third-party partner, Rewardful."
 		},
 		{
 			"title": "Who operates axys?",

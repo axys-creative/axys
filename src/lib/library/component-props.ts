@@ -974,6 +974,7 @@ export const richTextProps = props(
 	['.secondary', 'The secondary color.'],
 	['.stroke', 'An outline with no fill.'],
 	['.strong', 'Bold, as a `<strong>`.'],
+	['.underline', 'A straight underline.'],
 	['class', 'A string, a class for the wrapping span.']
 );
 

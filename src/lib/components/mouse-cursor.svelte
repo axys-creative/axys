@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { cursor, type CursorVariant } from '$lib/utils/cursor.svelte';
+	import { cursor, type CursorContent, type CursorVariant } from '$lib/utils/cursor.svelte';
 	import { damp } from '$lib/utils/easing';
 	import { createFollower, followEase, type Ease } from '$lib/utils/follow';
 	import { hasMouse, pointer, trackPointer } from '$lib/utils/pointer';
@@ -38,9 +38,13 @@
 	let shape = $state<HTMLElement>();
 	let visible = $state(false);
 	let lastIcon = $state('bolt');
+	let lastIconSize = $state<NonNullable<CursorContent['iconSize']>>('sm');
+	let lastIconColor = $state('currentColor');
 	let lastImage = $state('');
 	let lastLayer = $state<'front' | 'behind'>('behind');
 	let lastIconBehind = $state(false);
+	let returning = $state(false);
+	let previousVariant: string | undefined;
 	let controls = $state.raw<{ sync: (snapped: boolean) => void }>();
 
 	const variant = $derived(variants[cursor.variant ?? ''] ?? {});
@@ -50,6 +54,8 @@
 	$effect(() => {
 		if (iconName) {
 			lastIcon = iconName;
+			lastIconSize = content?.iconSize ?? 'sm';
+			lastIconColor = content?.iconColor ?? 'currentColor';
 			lastIconBehind = content?.iconLayer === 'behind';
 		}
 	});
@@ -59,6 +65,13 @@
 			lastImage = content.image;
 			lastLayer = content.imageLayer ?? 'behind';
 		}
+	});
+
+	$effect(() => {
+		const current = cursor.variant;
+		if (previousVariant && !current) returning = true;
+		else if (current) returning = false;
+		previousVariant = current;
 	});
 
 	// When a snap target is claimed or released, wake the loop or glide back to the mouse.
@@ -144,7 +157,7 @@
 				const key = claimed ? JSON.stringify(claimed) : '';
 				if (key !== claimTiltKey) {
 					claimTiltKey = key;
-					claimTilt = claimed ? createVelocityTilt(claimed) : null;
+					if (claimed) claimTilt = createVelocityTilt(claimed);
 				}
 				const activeTilt = claimTilt ?? mainTilt;
 				const tiltAngle = activeTilt ? activeTilt.update(targetX, targetY) : 0;
@@ -186,13 +199,14 @@
 	popover="manual"
 	class:visible
 	class:hidden={cursor.hidden}
+	class:returning
 	class:has-image={!!content?.image}
 	aria-hidden="true"
 	{style}
 >
 	<!-- Tilt rotates this wrapper so it turns around the cursor's own center, not the screen corner. -->
 	<div class="body" bind:this={body}>
-		<div class="shape" bind:this={shape}></div>
+		<div class="shape" bind:this={shape} onanimationend={() => (returning = false)}></div>
 		{#if content?.message}<span class="message">{content.message}</span>{/if}
 		{#if lastImage && lastLayer === 'front'}
 			<img
@@ -224,10 +238,9 @@
 
 {#snippet iconSpan()}
 	<span
-		class="icon {content?.iconSize ?? 'sm'}"
+		class="icon {lastIconSize}"
 		class:show={!!iconName}
-		style="mask-image: url('/icons/{lastIcon}.svg'); background: {content?.iconColor ??
-			'currentColor'}"
+		style="mask-image: url('/icons/{lastIcon}.svg'); background: {lastIconColor}"
 	></span>
 {/snippet}
 
@@ -298,10 +311,22 @@
 		transition: var(
 			--cursor-transition,
 			background 0.24s ease,
+			border-color 0.24s ease,
 			opacity 0.24s ease,
 			width 0.5s ease,
 			height 0.5s ease
 		);
+	}
+
+	.returning .shape {
+		transition: none;
+		animation: cursor-return 0.6s ease 0.15s backwards;
+	}
+
+	@keyframes cursor-return {
+		from {
+			opacity: 0;
+		}
 	}
 
 	.hidden .shape,
@@ -342,7 +367,7 @@
 	}
 
 	.icon {
-		--icon-size: 2.5ch;
+		--icon-size: 3.75ch;
 
 		width: var(--icon-size);
 		height: var(--icon-size);
@@ -353,15 +378,15 @@
 		transition: opacity 0.24s ease;
 
 		&.md {
-			--icon-size: 4ch;
-		}
-
-		&.lg {
 			--icon-size: 6ch;
 		}
 
-		&.xl {
+		&.lg {
 			--icon-size: 9ch;
+		}
+
+		&.xl {
+			--icon-size: 13.5ch;
 		}
 
 		&.show {

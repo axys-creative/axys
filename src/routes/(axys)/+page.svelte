@@ -21,7 +21,8 @@
 			iconSize: 'xl',
 			iconLayer: 'behind',
 			iconColor: 'rgb(255 255 255 / 0.2)',
-			variant: 'keyword'
+			variant: 'keyword',
+			tilt: { max: 20 }
 		});
 
 	const titleGlitch = glitchScroll({ mono: false, start: 'top bottom', end: 'bottom top' });
