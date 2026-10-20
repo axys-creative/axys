@@ -18,6 +18,8 @@
 		ctaQuarterly?: Pick<ButtonProps, 'text' | 'textDescription' | 'url' | 'newTab'>;
 		/** Stands out from the others with an accent background. */
 		featured?: boolean;
+		/** A small tag centered above the title, e.g. `Best deal`. A card with a tag also takes a black to dark gray gradient. */
+		badge?: string;
 	};
 
 	export type PlanSelectionProps = Pick<
@@ -43,9 +45,11 @@
 	import Button from '$lib/components/button.svelte';
 	import Icon from '$lib/components/icon.svelte';
 	import SectionCopy from '$lib/components/section-copy.svelte';
+	import Tag from '$lib/components/tag.svelte';
 	import Tooltip from '$lib/components/tooltip.svelte';
 	import { animate } from '$lib/attachments/animate';
 	import { gradientBorder } from '$lib/attachments/gradient-border';
+	import { paperGrain } from '$lib/attachments/paper-grain';
 	import { toggleSlider } from '$lib/attachments/toggle-slider';
 	import { preloadScramble, scrambleTo } from '$lib/utils/scramble';
 
@@ -118,13 +122,32 @@
 			</div>
 		{/if}
 
-		<div class="plans" {@attach animate({ stagger: 0.125 })}>
+		<div
+			class="plans"
+			{@attach animate({
+				stagger: 0.125,
+				once: false,
+				distance: 220,
+				duration: 1.1,
+				ease: 'cubic-bezier(0.22, 1.25, 0.36, 1)'
+			})}
+		>
 			{#each plans as plan (plan.title)}
 				<article
 					class="plan"
 					class:featured={plan.featured}
+					class:badged={!!plan.badge}
+					class:theme-dark={!!plan.badge}
 					{@attach gradientBorder({ rayTrace: true })}
 				>
+					{#if plan.badge}
+						<div
+							class="grain"
+							aria-hidden="true"
+							{@attach paperGrain({ variant: 'specks', color: '#b8b8b8', opacity: 0.3 })}
+						></div>
+						<div class="badge"><Tag text={plan.badge} type="glass" /></div>
+					{/if}
 					<h3 class="h2">{plan.title}</h3>
 
 					<div class="price-group">
@@ -226,7 +249,10 @@
 		cursor: pointer;
 
 		@include mixins.mq-motion-allow {
-			transition: color var(--duration) var(--ease);
+			transition:
+				color var(--duration) var(--ease),
+				opacity var(--duration) var(--ease),
+				scale 0.24s ease;
 		}
 
 		&:has(input:checked) {
@@ -274,14 +300,41 @@
 		flex-direction: column;
 		align-items: center;
 		gap: 24px;
-		padding: 80px 24px 56px;
+		padding: 104px 24px 80px;
 		border: 1px solid var(--color-border);
 		border-radius: var(--radius);
 		background: color-mix(in srgb, var(--color-bg) 80%, transparent);
 		backdrop-filter: blur(16px);
 
 		@include mixins.max-sm {
-			padding: 64px 16px 44px;
+			padding: 88px 16px 68px;
+		}
+	}
+
+	.plan.badged {
+		isolation: isolate;
+		background: linear-gradient(160deg, #000 0%, #202020 100%);
+	}
+
+	// The specks sit on their own layer because the card's own `::before` is the ray trace glow.
+	.plan .grain {
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		border-radius: inherit;
+		pointer-events: none;
+	}
+
+	.badge {
+		position: absolute;
+		inset-block-start: 60px;
+		inset-inline: 0;
+		display: flex;
+		justify-content: center;
+		text-transform: capitalize;
+
+		@include mixins.max-sm {
+			inset-block-start: 52px;
 		}
 	}
 
@@ -316,7 +369,7 @@
 			height: 1px;
 			margin: 0;
 			border: 0;
-			background: linear-gradient(90deg, transparent, var(--color-border), transparent);
+			background: linear-gradient(90deg, transparent, var(--color-line), transparent);
 		}
 	}
 

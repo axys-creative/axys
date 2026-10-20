@@ -35,6 +35,7 @@
 <script lang="ts">
 	import type { Attachment } from 'svelte/attachments';
 	import { cursorTarget } from '$lib/attachments/cursor-target';
+	import { cursor } from '$lib/utils/cursor.svelte';
 	import { magnet } from '$lib/attachments/magnet';
 	import { glitchHover } from '$lib/attachments/glitch-hover';
 	import Icon from './icon.svelte';
@@ -82,6 +83,56 @@
 			event: 'enter'
 		})(el);
 
+	// The cursor becomes a thin bar beside the hovered link and slides from link to link without letting go.
+	const slider: Attachment<HTMLElement> = (list) => {
+		const owner = Symbol('nav-slider');
+		let current: HTMLElement | null = null;
+
+		const claim = (link: HTMLElement) => {
+			current = link;
+			cursor.claim(owner, {
+				variant: 'bar',
+				target: () => {
+					const rect = current?.getBoundingClientRect();
+					const text = current?.querySelector('.label')?.getBoundingClientRect();
+					return rect && text
+						? { x: text.left - 16, y: rect.top + rect.height / 2, width: 2, height: rect.height }
+						: null;
+				}
+			});
+		};
+
+		const release = () => {
+			current = null;
+			cursor.release(owner);
+		};
+
+		// The bar holds between two links, but lets go once the pointer is off the link's column or over empty space beside it.
+		const update = (event: PointerEvent) => {
+			if (event.pointerType !== 'mouse') return;
+			const link = (event.target as Element).closest<HTMLElement>('a');
+			if (link && list.contains(link)) {
+				if (link !== current) claim(link);
+				return;
+			}
+			if (!current) return;
+			const rect = current.getBoundingClientRect();
+			const inColumn = event.clientX >= rect.left && event.clientX <= rect.right;
+			const between = event.target === list || (event.target as Element).tagName === 'LI';
+			if (!(between && inColumn)) release();
+		};
+
+		list.addEventListener('pointerover', update);
+		list.addEventListener('pointermove', update);
+		list.addEventListener('pointerleave', release);
+		return () => {
+			list.removeEventListener('pointerover', update);
+			list.removeEventListener('pointermove', update);
+			list.removeEventListener('pointerleave', release);
+			release();
+		};
+	};
+
 	// The same pull as the menu button's burger.
 	const pull = {
 		x: 1.2,
@@ -107,7 +158,7 @@
 	{onclick}
 >
 	<div class="constraint">
-		<ul class="links">
+		<ul class="links" {@attach slider}>
 			{#each links as link (link.url)}
 				<li style="--accent: {accent(link.accent)}">
 					<a

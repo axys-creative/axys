@@ -18,6 +18,8 @@
 		speed?: number;
 		/** Every other row moves the opposite way. */
 		alternate?: boolean;
+		/** Runs every row the opposite way, for a one-row marquee that should move against the one beside it. */
+		opposite?: boolean;
 		/** The rows move backwards after the page scrolls up and forwards again after it scrolls down. */
 		reverse?: boolean;
 		/** Ties the rows to scrolling, on top of their own motion: `1` is 1px per 1px scrolled. */
@@ -40,6 +42,7 @@
 		rows = 1,
 		speed = 60,
 		alternate = true,
+		opposite = false,
 		reverse = false,
 		scrub = 0,
 		pauseOnHover = false,
@@ -57,7 +60,7 @@
 
 	const name = $derived(label ?? text);
 	const duration = $derived(halfWidth && speed > 0 ? halfWidth / speed : 0);
-	const reversedRow = (row: number) => alternate && row % 2 === 1;
+	const reversedRow = (row: number) => (alternate && row % 2 === 1) !== opposite;
 
 	onMount(() => {
 		still = matchMedia('(prefers-reduced-motion: reduce)').matches;

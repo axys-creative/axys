@@ -6,7 +6,7 @@ export type PageTransitionName = CrossName | CoverName;
 
 export const isCover = (name: PageTransitionName): name is CoverName => name === 'tiles';
 
-export type TileSequence = 'linear' | 'circle' | 'checkers';
+export type TileSequence = 'linear' | 'circle' | 'checkers' | 'random' | 'wave';
 
 export type TilesOptions = {
 	/** Approximate tile width and height in px. The page is divided into as many as fit. */
@@ -100,6 +100,18 @@ function tileOrder(columns: number, rows: number, sequence: TileSequence) {
 	const cell = (index: number) => [Math.floor(index / columns), index % columns] as const;
 	const spread = (rank: number, count: number) => (count > 1 ? rank / (count - 1) : 0);
 
+	if (sequence === 'random') return Array.from({ length: total }, () => Math.random());
+
+	// A wave from the top left to the bottom right, scattered by chance, as in the loader grid.
+	if (sequence === 'wave') {
+		const keys = Array.from({ length: total }, (_, index) => {
+			const [row, column] = cell(index);
+			return row + column + Math.random() * 0.15 * (columns + rows);
+		});
+		const longest = Math.max(...keys) || 1;
+		return keys.map((key) => key / longest);
+	}
+
 	if (sequence === 'circle') {
 		const distances = Array.from({ length: total }, (_, index) => {
 			const [row, column] = cell(index);
@@ -126,13 +138,8 @@ function tileOrder(columns: number, rows: number, sequence: TileSequence) {
 	return Array.from({ length: total }, (_, index) => spread(index, total));
 }
 
-/**
- * Covers `container` with a grid of tiles, runs `swap` while it is covered, then fades the tiles away in
- * the same order. `fixed` covers the whole window instead of the container.
- */
-export async function playTiles(
+function buildTiles(
 	container: HTMLElement,
-	swap: () => Promise<void> | void,
 	{
 		tileSize = 160,
 		sequence = 'linear',
@@ -140,8 +147,9 @@ export async function playTiles(
 		spread = 600,
 		color = 'var(--color-surface)',
 		preserveHeader = false
-	}: TilesOptions & { preserveHeader?: boolean } = {},
-	fixed = false
+	}: TilesOptions & { preserveHeader?: boolean },
+	fixed: boolean,
+	opacity: number
 ) {
 	const width = fixed ? innerWidth : container.clientWidth;
 	const height = fixed ? innerHeight : container.clientHeight;
@@ -155,7 +163,7 @@ export async function playTiles(
 
 	const tiles = delays.map(() => {
 		const tile = document.createElement('div');
-		tile.style.cssText = `opacity:0;background:${color};box-shadow:0 0 0 0.5px ${color};`;
+		tile.style.cssText = `opacity:${opacity};background:${color};box-shadow:0 0 0 0.5px ${color};`;
 		overlay.append(tile);
 		return tile;
 	});
@@ -174,9 +182,44 @@ export async function playTiles(
 			)
 		);
 
+	return { overlay, run };
+}
+
+/**
+ * Covers `container` with a grid of tiles, runs `swap` while it is covered, then fades the tiles away in
+ * the same order. `fixed` covers the whole window instead of the container.
+ */
+export async function playTiles(
+	container: HTMLElement,
+	swap: () => Promise<void> | void,
+	options: TilesOptions & { preserveHeader?: boolean } = {},
+	fixed = false
+) {
+	const { overlay, run } = buildTiles(container, options, fixed, 0);
+
 	try {
 		await run(0, 1);
 		await swap();
+		await run(1, 0);
+	} finally {
+		overlay.remove();
+	}
+}
+
+/** Covers the window with tiles and leaves them there, for a page that is about to be replaced. Returns a function that takes the cover off. */
+export async function coverPage(options: TilesOptions = {}) {
+	const { overlay, run } = buildTiles(document.body, options, true, 0);
+	await run(0, 1);
+	return () => overlay.remove();
+}
+
+/** On a new page that starts covered, fades the tiles away. `onRelease` runs a little into the fade, so the page behind can start. */
+export async function uncoverPage(options: TilesOptions = {}, onRelease?: () => void) {
+	const { overlay, run } = buildTiles(document.body, options, true, 1);
+	document.documentElement.removeAttribute('data-covered');
+	setTimeout(() => onRelease?.(), (options.spread ?? 600) * 0.3);
+
+	try {
 		await run(1, 0);
 	} finally {
 		overlay.remove();

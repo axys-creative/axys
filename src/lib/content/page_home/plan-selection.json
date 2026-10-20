@@ -84,7 +84,7 @@
 			"priceQuarterly": "3,595",
 			"totalQuarterly": "10,785",
 			"savingsQuarterly": "$1,200",
-			"featured": true,
+			"badge": "Best deal",
 			"features": [
 				{
 					"text": "Unlimited Design + Development",

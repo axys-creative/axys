@@ -58,7 +58,7 @@
 			{
 				name: 'sequence',
 				description:
-					"`'linear' | 'circle' | 'checkers'`. The order tiles appear and disappear: reading order from the top left, outward from the center, or a checkerboard in two waves. Defaults to `linear`."
+					"`'linear' | 'circle' | 'checkers' | 'random' | 'wave'`. The order tiles appear and disappear: reading order from the top left, outward from the center, a checkerboard in two waves, scattered, or a scattered wave from the top left to the bottom right. Defaults to `linear`."
 			},
 			{
 				name: 'duration',
@@ -97,6 +97,22 @@
 			description="`sequence: 'checkers'`, `tileSize: 70`. Half the squares appear, then the rest."
 		>
 			<TransitionFrame name="tiles" sequence="checkers" tileSize={70} />
+		</LibrarySection>
+
+		<LibrarySection
+			level={3}
+			title="Random"
+			description="`sequence: 'random'`, `tileSize: 96`. Tiles appear and disappear in a scattered order."
+		>
+			<TransitionFrame name="tiles" sequence="random" tileSize={96} spread={500} duration={220} />
+		</LibrarySection>
+
+		<LibrarySection
+			level={3}
+			title="Wave"
+			description="`sequence: 'wave'`, `tileSize: 64`, `spread: 950`, `duration: 250`. The same as the loader grid: tiles leave in a scattered wave from the top left to the bottom right. The Axys site uses it between pages through `components/page-grid.svelte`: it covers the page on a link click, the next page starts covered, then the tiles fade away like the loader. That works for pages that load in full; with in-app navigation, use the Tiles transition above."
+		>
+			<TransitionFrame name="tiles" sequence="wave" tileSize={64} spread={950} duration={250} />
 		</LibrarySection>
 	</LibrarySection>
 </div>

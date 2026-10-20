@@ -47,8 +47,8 @@
 			<span class="share"><Icon name="share" /></span>
 		</p>
 		<ul class="social-links">
-			{#each links as link (link.url)}
-				<li>
+			{#each links as link, index (link.url)}
+				<li style="--index: {index}">
 					<a
 						class="social-link"
 						href={link.url}
@@ -141,14 +141,12 @@
 		border-radius: 50%;
 		color: var(--color-text);
 		text-decoration: none;
-		opacity: 0;
 		pointer-events: none;
 
 		@include mixins.mq-motion-allow {
 			transition:
 				border-color 0.3s ease,
-				color 0.3s ease,
-				opacity 0.3s ease;
+				color 0.3s ease;
 		}
 
 		&:focus-visible {
@@ -157,19 +155,48 @@
 		}
 
 		@include mixins.max-md {
-			opacity: 1;
 			pointer-events: auto;
 		}
 
 		@media (hover: none) {
-			opacity: 1;
 			pointer-events: auto;
+		}
+	}
+
+	// Each item rises and fades in after the one before it, on a wrapper so it does not touch the link's magnet.
+	.social-links li {
+		opacity: 0;
+		translate: 0 16px;
+
+		@include mixins.mq-motion-allow {
+			transition:
+				opacity 0.3s ease,
+				translate 0.4s var(--ease);
+		}
+
+		@include mixins.max-md {
+			opacity: 1;
+			translate: 0 0;
+		}
+
+		@media (hover: none) {
+			opacity: 1;
+			translate: 0 0;
+		}
+	}
+
+	.social:hover .social-links li,
+	.social:focus-within .social-links li {
+		opacity: 1;
+		translate: 0 0;
+
+		@include mixins.mq-motion-allow {
+			transition-delay: calc(var(--index) * 70ms + 100ms);
 		}
 	}
 
 	.social:hover .social-link,
 	.social:focus-within .social-link {
-		opacity: 1;
 		pointer-events: auto;
 	}
 </style>

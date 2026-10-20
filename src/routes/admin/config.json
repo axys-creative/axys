@@ -592,6 +592,13 @@
 									"hint": "e.g. $600."
 								},
 								{
+									"name": "badge",
+									"label": "Badge",
+									"widget": "string",
+									"required": false,
+									"hint": "A small tag above the title, e.g. Best deal. The card also gets a black to dark gray gradient."
+								},
+								{
 									"name": "featured",
 									"label": "Featured",
 									"widget": "boolean",

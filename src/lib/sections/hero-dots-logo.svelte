@@ -24,6 +24,7 @@
 <script lang="ts">
 	import CtaGroupComponent from '$lib/components/cta-group.svelte';
 	import { dotsFill } from '$lib/attachments/dots-fill';
+	import { loading } from '$lib/utils/loading.svelte';
 	import { glitchCycle } from '$lib/attachments/glitch-cycle';
 	import { push } from '$lib/attachments/push';
 	import { textReveal } from '$lib/attachments/text-reveal';
@@ -65,15 +66,19 @@
 				</span>
 			</span>
 			{#if line}
-				<span class="line" {@attach textReveal({ type: 'words', once: true, duration: 1 })}
-					>{line}</span
+				<span
+					class="line"
+					{@attach loading.done
+						? textReveal({ type: 'words', once: true, duration: 1 })
+						: undefined}>{line}</span
 				>
 			{/if}
 			{#if lineEnd}
 				<span
 					class="line shift"
-					{@attach textReveal({ type: 'words', once: true, duration: 1, stagger: 0.12 })}
-					>{lineEnd}</span
+					{@attach loading.done
+						? textReveal({ type: 'words', once: true, duration: 1, stagger: 0.12 })
+						: undefined}>{lineEnd}</span
 				>
 			{/if}
 		</h1>

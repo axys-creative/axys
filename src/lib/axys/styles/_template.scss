@@ -44,3 +44,47 @@
 .header[data-scroll-down]:not([data-nav-open]) .axys-menu:is(:hover, :focus-visible) .text {
 	opacity: 1;
 }
+
+.header[data-scroll-down]:not([data-nav-open]) .local-time {
+	opacity: 0;
+	transition-duration: 0.3s;
+	transition-timing-function: ease;
+}
+
+// Every link on this site is a full page load, so the browser plays the page transition itself. These are the keyframes of the template's `fade`.
+@media (prefers-reduced-motion: no-preference) {
+	@view-transition {
+		navigation: auto;
+	}
+
+	::view-transition-old(root),
+	::view-transition-new(root) {
+		animation-duration: 0.3s;
+		animation-timing-function: cubic-bezier(0.18, 0.97, 0.47, 1);
+		animation-fill-mode: both;
+		mix-blend-mode: normal;
+	}
+
+	::view-transition-old(root) {
+		animation-name: page-fade-out;
+	}
+
+	::view-transition-new(root) {
+		animation-name: page-fade-in;
+		animation-delay: 0.3s;
+	}
+}
+
+@keyframes page-fade-out {
+	to {
+		opacity: 0;
+		translate: 0 -12px;
+	}
+}
+
+@keyframes page-fade-in {
+	from {
+		opacity: 0;
+		translate: 0 12px;
+	}
+}

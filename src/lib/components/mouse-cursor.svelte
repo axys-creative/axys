@@ -43,8 +43,6 @@
 	let lastImage = $state('');
 	let lastLayer = $state<'front' | 'behind'>('behind');
 	let lastIconBehind = $state(false);
-	let returning = $state(false);
-	let previousVariant: string | undefined;
 	let controls = $state.raw<{ sync: (snapped: boolean) => void }>();
 
 	const variant = $derived(variants[cursor.variant ?? ''] ?? {});
@@ -67,13 +65,6 @@
 		}
 	});
 
-	$effect(() => {
-		const current = cursor.variant;
-		if (previousVariant && !current) returning = true;
-		else if (current) returning = false;
-		previousVariant = current;
-	});
-
 	// When a snap target is claimed or released, wake the loop or glide back to the mouse.
 	$effect(() => {
 		controls?.sync(!!cursor.target);
@@ -83,6 +74,7 @@
 		[
 			variant.size !== undefined && `--cursor-size: ${variant.size}px`,
 			variant.opacity !== undefined && `--cursor-opacity: ${variant.opacity}`,
+			variant.radius && `--cursor-radius: ${variant.radius}`,
 			variant.background && `--cursor-bg: ${variant.background}`,
 			variant.border && `--cursor-border: ${variant.border}`,
 			variant.color && `--cursor-color: ${variant.color}`,
@@ -124,6 +116,15 @@
 				) {
 					follower.moveTo(snapped.x, snapped.y);
 				}
+
+				el!.style.setProperty(
+					'--cursor-w',
+					snapped?.width !== undefined ? `${snapped.width}px` : ''
+				);
+				el!.style.setProperty(
+					'--cursor-h',
+					snapped?.height !== undefined ? `${snapped.height}px` : ''
+				);
 
 				const transform = `translate3d(calc(${x}px - 50%), calc(${y}px - 50%), 0)`;
 				el!.style.transform = transform;
@@ -199,14 +200,13 @@
 	popover="manual"
 	class:visible
 	class:hidden={cursor.hidden}
-	class:returning
 	class:has-image={!!content?.image}
 	aria-hidden="true"
 	{style}
 >
 	<!-- Tilt rotates this wrapper so it turns around the cursor's own center, not the screen corner. -->
 	<div class="body" bind:this={body}>
-		<div class="shape" bind:this={shape} onanimationend={() => (returning = false)}></div>
+		<div class="shape" bind:this={shape}></div>
 		{#if content?.message}<span class="message">{content.message}</span>{/if}
 		{#if lastImage && lastLayer === 'front'}
 			<img
@@ -302,10 +302,10 @@
 	}
 
 	.shape {
-		width: var(--cursor-size, 48px);
-		height: var(--cursor-size, 48px);
+		width: var(--cursor-w, var(--cursor-size, 48px));
+		height: var(--cursor-h, var(--cursor-size, 48px));
 		border: var(--cursor-border, 2px solid var(--color-text));
-		border-radius: 50%;
+		border-radius: var(--cursor-radius, 50%);
 		background: var(--cursor-bg, transparent);
 		opacity: var(--cursor-opacity, 0.25);
 		transition: var(
@@ -316,17 +316,6 @@
 			width 0.5s ease,
 			height 0.5s ease
 		);
-	}
-
-	.returning .shape {
-		transition: none;
-		animation: cursor-return 0.6s ease 0.15s backwards;
-	}
-
-	@keyframes cursor-return {
-		from {
-			opacity: 0;
-		}
 	}
 
 	.hidden .shape,

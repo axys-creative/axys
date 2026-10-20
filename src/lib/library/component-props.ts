@@ -15,7 +15,10 @@ export const buttonProps = props(
 		'A string. With a url the button is a link (`/page`, `#id`, `mailto:` or a full URL); without one it is a `<button>`.'
 	],
 	['newTab', 'A boolean. Opens in a new tab and tells screen readers it does.'],
-	['type', '`solid | outline | underline | text`. Defaults to `solid`.'],
+	[
+		'type',
+		'`solid | outline | underline | text | square`. Defaults to `solid`. `square` is a filled rectangle that swings away down and right on hover while a square holding an arrow (or `iconStart`) swings in from the left and the text moves over. The square is pulled by the mouse while the pointer is over it, and the custom cursor is hidden over the whole button.'
+	],
 	['htmlType', '`button | submit | reset`. For the `<button>` version. Defaults to `button`.'],
 	['size', '`sm | md | lg`. Defaults to `md`.'],
 	['disabled', 'A boolean.'],
@@ -28,6 +31,7 @@ export const buttonProps = props(
 	['iconStart', 'An icon name from `static/icons`, shown before the text.'],
 	['iconEnd', 'An icon name from `static/icons`, shown after the text.'],
 	['iconCircle', 'A boolean. Draws a ring around the end icon on hover. Defaults to `false`.'],
+	['iconShift', 'A CSS length, e.g. `8px`. Slides the end icon that far to the right on hover.'],
 	[
 		'iconEndAttach',
 		'An attachment for the end icon alone, such as `magnet({ x: 1, y: 1 })`, so only the icon follows the mouse.'
@@ -98,6 +102,30 @@ export const menuLinksProps = props(
 		'landmark',
 		'A boolean. Render a `<nav>`. Turn off inside something that is already a `<nav>`. Defaults to `true`.'
 	],
+	['class', 'A string of extra classes.']
+);
+
+export const loaderGridProps = props(
+	['minDuration', 'A number, milliseconds the count takes at the fastest. Defaults to `900`.'],
+	[
+		'maxDuration',
+		'A number, milliseconds after which it finishes even if the page is still loading. Defaults to `8000`.'
+	],
+	[
+		'track',
+		'A function that takes an `update(progress)` callback (0 to 1) and returns a function that stops it. Defaults to watching fonts and the pictures in the first screen.'
+	],
+	[
+		'contained',
+		'A boolean. Stays inside its parent: no scroll lock, and `loading.done` is untouched.'
+	],
+	['onfinish', 'A function that runs when the loader has left.'],
+	['class', 'A string of extra classes.']
+);
+
+export const localTimeProps = props(
+	['timeZone', 'A string, an IANA time zone. Defaults to `America/Denver`.'],
+	['label', 'A string shown before the time. Defaults to `Utah`. Empty for none.'],
 	['class', 'A string of extra classes.']
 );
 
@@ -598,6 +626,10 @@ export const marqueeProps = props(
 	],
 	['alternate', 'A boolean. Every other row moves the opposite way. Defaults to `true`.'],
 	[
+		'opposite',
+		'A boolean. Runs every row the other way, so a one-row marquee can move against the one beside it. Defaults to `false`.'
+	],
+	[
 		'reverse',
 		'A boolean. The rows move backwards after the page scrolls up and forwards again after it scrolls down, turning around smoothly. Anything inside the content with the class `marquee-flip` (an arrow, say) turns around with it, and in rows that run the other way. Defaults to `false`.'
 	],
@@ -959,7 +991,19 @@ export const richTextProps = props(
 		'text',
 		'A string. `[words]{.primary}` styles the words, `[words]{.primary .scribble}` combines classes, and `{.br}` is a line break. Anything else, including `<` and `&`, is shown as typed. Required.'
 	],
+	[
+		'.glitch',
+		'Scrambles the letters each time it scrolls into view (see Glitch Scroll under Attachments).'
+	],
+	['.h1', 'The H1 size and font, without a heading element.'],
+	['.h2', 'The H2 size and font, without a heading element.'],
+	['.h3', 'The H3 size and font, without a heading element.'],
+	['.h4', 'The H4 size and font, without a heading element.'],
+	['.h5', 'The H5 size and font, without a heading element.'],
+	['.h6', 'The H6 size and font, without a heading element.'],
+	['.highlight', 'A solid accent color behind the words, with text in the on-accent color.'],
 	['.italic', 'Italic.'],
+	['.nowrap', 'Keeps the words together on one line.'],
 	['.primary', 'The brand accent color.'],
 	[
 		'.scribble',
@@ -972,6 +1016,7 @@ export const richTextProps = props(
 	['.scribble-circle-tight', 'The same loop drawn closer to the words (scale 0.8).'],
 	['.scribble-circle-wide', 'The same loop drawn farther from the words (scale 1.2).'],
 	['.secondary', 'The secondary color.'],
+	['.strike', 'A line through the words.'],
 	['.stroke', 'An outline with no fill.'],
 	['.strong', 'Bold, as a `<strong>`.'],
 	['.underline', 'A straight underline.'],
@@ -1301,7 +1346,7 @@ export const planSelectionProps = props(
 	],
 	[
 		'plans',
-		'An array of plans. Each is `{ title, priceMonthly, priceQuarterly, totalQuarterly, savingsQuarterly, features, ctaMonthly, ctaQuarterly, featured }`. `features` are strings, or `{ text, strong }` to make one bold. The two `cta` objects are Button props (`text`, `textDescription`, `url`, `newTab`). `featured` gives the card an accent background. Required.'
+		'An array of plans. Each is `{ title, priceMonthly, priceQuarterly, totalQuarterly, savingsQuarterly, features, ctaMonthly, ctaQuarterly, featured, badge }`. `features` are strings, or `{ text, strong }` to make one bold. The two `cta` objects are Button props (`text`, `textDescription`, `url`, `newTab`). `featured` gives the card an accent background. `badge` puts a small tag above the title and gives the card a black to dark gray gradient. Required.'
 	],
 	[
 		'priceToggle',

@@ -12,6 +12,41 @@
 					saved === 'system' ? (dark ? 'dark' : 'light') : saved;
 			} catch {}
 		</script>
+		<script>
+			try {
+				const [nav] = performance.getEntriesByType('navigation');
+				const own = new URL(document.referrer).origin === location.origin;
+				if (nav && (nav.type === 'back_forward' || (nav.type === 'navigate' && own)))
+					document.documentElement.dataset.noLoader = '';
+			} catch {}
+		</script>
+		<script>
+			try {
+				if (sessionStorage.getItem('page-cover')) {
+					sessionStorage.removeItem('page-cover');
+					if (!matchMedia('(prefers-reduced-motion: reduce)').matches)
+						document.documentElement.dataset.covered = '';
+				}
+			} catch {}
+		</script>
+		<style>
+			html[data-covered]::after {
+				content: '';
+				position: fixed;
+				inset: 0;
+				z-index: 100;
+				background: #1a1a1a;
+				animation: cover-failsafe 0.3s ease 5s forwards;
+			}
+			html[data-theme='light'][data-covered]::after {
+				background: #f1f1f1;
+			}
+			@keyframes cover-failsafe {
+				to {
+					visibility: hidden;
+				}
+			}
+		</style>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">

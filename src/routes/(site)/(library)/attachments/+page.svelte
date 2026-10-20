@@ -22,6 +22,7 @@
 	import { glitchScroll } from '$lib/attachments/glitch-scroll';
 	import { glitchTarget } from '$lib/attachments/glitch-target';
 	import { gradientBorder } from '$lib/attachments/gradient-border';
+	import { headingLine } from '$lib/attachments/heading-line';
 	import { gridFade } from '$lib/attachments/grid-fade';
 	import { magnet } from '$lib/attachments/magnet';
 	import { paperGrain } from '$lib/attachments/paper-grain';
@@ -176,6 +177,16 @@
 			},
 			{ name: 'delay', description: 'A number, seconds to wait before animating in.' },
 			{ name: 'duration', description: 'A number, seconds the transition lasts.' },
+			{
+				name: 'distance',
+				description:
+					'A number, pixels the element travels from, for `up`, `down`, `left` and `right`. Defaults to `24`.'
+			},
+			{
+				name: 'ease',
+				description:
+					"A CSS timing function, e.g. `cubic-bezier(0.22, 1.25, 0.36, 1)`, which overshoots a little. Defaults to the site's ease."
+			},
 			{
 				name: 'stagger',
 				description:
@@ -635,7 +646,12 @@
 				name: 'end',
 				description: 'A string, the scroll position it ends at. Defaults to `bottom 2%`.'
 			},
-			{ name: 'mono', description: 'A boolean. Use the mono-spaced font. Defaults to `true`.' }
+			{ name: 'mono', description: 'A boolean. Use the mono-spaced font. Defaults to `true`.' },
+			{
+				name: 'lockWidth',
+				description:
+					'A boolean. Holds the element at its resting width so the scramble cannot make the line around it shake. Defaults to `true`.'
+			}
 		]}
 		propsLabel="options"
 	>
@@ -831,6 +847,21 @@
 	</LibrarySection>
 
 	<LibrarySection
+		title="Heading Line"
+		type="Attachment"
+		description="Draws a 1px line under a heading, in the same gradient that fades to transparent at both ends as the lines on the plan cards, in the `--color-line` token, that grows from the center the first time it scrolls into view. It adds a little padding under the heading for the line. With reduced motion the line is drawn from the start. The Axys layout puts it on every `h2` outside the toast."
+		props={[
+			{
+				name: 'threshold',
+				description:
+					'A number from `0` to `1`, the share of the heading that must be on screen before the line draws. Defaults to `0.5`.'
+			}
+		]}
+	>
+		<h3 class="h3" {@attach headingLine()}>A heading with a line</h3>
+	</LibrarySection>
+
+	<LibrarySection
 		title="Magnet"
 		type="Attachment"
 		description="Pulls an element toward the pointer while it is hovered. Mouse and reduced-motion aware. A CSS transition follows the pointer while a script settles it back, which together give the soft return."
@@ -906,7 +937,7 @@
 			{
 				name: 'variant',
 				description:
-					"`'fibers' | 'flecks' | 'pulp'`. Tiny wisps like the fibers in paper stock; long lines with a few specks; lines crossed over a soft mottle. Defaults to `fibers`."
+					"`'fibers' | 'flecks' | 'specks' | 'pulp'`. Tiny wisps like the fibers in paper stock; long lines with a few specks; only the fine specks; lines crossed over a soft mottle. Defaults to `fibers`."
 			},
 			{ name: 'opacity', description: 'A number from 0 to 1. Defaults to `0.1`.' },
 			{
@@ -1373,6 +1404,11 @@
 			durationProp('0.2'),
 			staggerProp('0.05'),
 			easeProp('linear'),
+			{
+				name: 'delay',
+				description:
+					'A number, seconds to wait after it starts before the first piece moves. Defaults to `0`.'
+			},
 			...scrollProps({ start: 'top 98%', end: 'bottom 2%' })
 		]}
 		propsLabel="options"

@@ -30,14 +30,28 @@ body {
 	background-color: $black;
 
 	.hero-section {
-		.section-headline__title span {
-			opacity: 0;
-			translate: 0 120%;
-			filter: blur($blur);
+		.section-headline__title .line {
+			display: block;
+			overflow: hidden;
+			padding-block: 0.05em 0.18em;
+			margin-block: -0.05em -0.18em;
+
+			> span:not(.no-motion) {
+				@include mq-motion-allow {
+					display: block;
+					translate: 0 110%;
+					transform: translateX(var(--from-x, 0));
+				}
+			}
+		}
+		.section-headline__title .dynamic-text {
+			--from-x: clamp(48px, 9vw, 160px);
+		}
+		.section-headline__title .development {
+			--from-x: calc(-1 * var(--indent, 0px));
 		}
 		.section-headline__subtitle {
 			opacity: 0;
-			filter: blur($blur);
 		}
 		.cta-wrapper {
 			opacity: 0;
@@ -47,22 +61,22 @@ body {
 
 	&:has(.load-complete) {
 		.hero-section {
-			.section-headline__title span {
-				opacity: 1;
+			.section-headline__title .line > span {
 				translate: 0 0;
-				filter: blur(0);
-				transition: 0.75s ease;
+				transform: translateX(0);
+				transition:
+					translate 0.75s ease var(--delay, 0s),
+					transform 0.9s ease calc(var(--delay, 0s) + 0.45s);
+			}
 
-				@for $i from 1 through 5 {
-					&:nth-of-type(#{$i}) {
-						transition-delay: 0.05s * $i;
-					}
+			@for $i from 1 through 3 {
+				.section-headline__title .line:nth-of-type(#{$i}) > span {
+					--delay: #{0.14s * ($i - 1)};
 				}
 			}
 			.section-headline__subtitle {
 				opacity: 1;
-				filter: blur(0);
-				transition: 0.8s ease 0.7s;
+				transition: opacity 0s 0.6s;
 			}
 			.cta-wrapper {
 				opacity: 1;
@@ -111,6 +125,11 @@ section {
 
 		&__heading {
 			margin-block-end: 24px;
+
+			&.heading-line {
+				width: fit-content;
+				margin-inline: auto;
+			}
 
 			// @include mq-motion-allow {
 			//   opacity: 0.2;
@@ -316,7 +335,13 @@ h2 {
 	@include title-font;
 }
 
+// The loader's counter scales with the screen.
+:root {
+	--loader-count-size: clamp(48px, 6.25vw, 160px);
+}
+
 h2 {
+	text-transform: capitalize;
 	font-size: 72px;
 
 	@include mq-max('xxl') {
@@ -397,7 +422,7 @@ code {
 
 .cta-wrapper {
 	display: flex;
-	gap: 20px;
+	gap: 32px;
 }
 
 .social-media-container {

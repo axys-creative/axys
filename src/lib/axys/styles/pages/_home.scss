@@ -1,15 +1,24 @@
 .hero-section {
+	--indent: 240px;
+
 	max-width: var(--content-width);
 	margin-inline: auto;
 	margin-block-start: 124px;
 	padding: 196px 0;
 
 	@include mq-max('xxl') {
+		--indent: 200px;
+
 		padding: 124px 0;
 	}
 
 	@include mq-max('xl') {
+		--indent: 160px;
 		margin-block-start: 96px;
+	}
+
+	@include mq-max('md') {
+		--indent: 0px;
 	}
 
 	.section-headline {
@@ -35,22 +44,8 @@
 				}
 			}
 
-			span {
-				&:last-of-type {
-					padding-inline-start: 240px;
-
-					@include mq-max('xxl') {
-						padding-inline-start: 200px;
-					}
-
-					@include mq-max('xl') {
-						padding-inline-start: 160px;
-					}
-
-					@include mq-max('md') {
-						padding-inline-start: 0;
-					}
-				}
+			.development {
+				padding-inline-start: var(--indent);
 			}
 		}
 
@@ -60,7 +55,7 @@
 			line-height: 120%;
 			display: inline-block;
 			color: $white;
-			translate: 0 -64px;
+			translate: 0 -52px;
 
 			@include mq-max('xl') {
 				font-size: 12px;
@@ -75,15 +70,7 @@
 	}
 
 	.cta-wrapper {
-		margin-inline-start: 112px;
-
-		@include mq-max('xl') {
-			margin-inline-start: 96px;
-		}
-
-		@include mq-max('md') {
-			margin-inline-start: 0;
-		}
+		margin-inline-start: var(--indent);
 	}
 }
 
@@ -191,8 +178,12 @@
 					}
 				}
 
+				.showcase-media {
+					aspect-ratio: 3 / 2;
+					border-radius: var(--radius);
+				}
+
 				.showcase-img {
-					@include swing-in(fade);
 					display: block;
 					width: 100%;
 					height: auto;
@@ -374,6 +365,10 @@
 
 		.section-headline {
 			text-align: left;
+
+			&__heading.heading-line {
+				margin-inline: 0;
+			}
 		}
 	}
 
@@ -444,6 +439,15 @@
 					}
 				}
 
+				.icon {
+					--icon-size: 48px;
+					color: $benefits-title-color;
+
+					@include mq-max('md') {
+						--icon-size: 24px;
+					}
+				}
+
 				svg {
 					width: 48px;
 					// filter: drop-shadow(0px 0px 4px rgba(255, 255, 255, 0.5));
@@ -510,10 +514,8 @@
 				.benefit-heading {
 					color: var(--heading-color);
 
-					svg {
-						path {
-							fill: var(--heading-color);
-						}
+					.icon {
+						color: var(--heading-color);
 					}
 				}
 
@@ -549,12 +551,33 @@
 
 // The FAQ list is wider than the accordion's default text column, and each question has more room.
 #faq {
+	h2 .rich-text--primary {
+		color: $faq-title-color;
+	}
+
 	.questions {
 		max-width: 900px;
 	}
 
 	.trigger {
 		padding-block: 24px;
+	}
+
+	// Each question slides in from the right as it comes into view; the accordion's own transition would replace the slide's.
+	.item.animate {
+		transition:
+			opacity var(--animate-duration) var(--ease) var(--animate-delay),
+			translate var(--animate-duration) var(--ease) var(--animate-delay),
+			border-color var(--duration) var(--ease);
+	}
+
+	.item {
+		padding-inline: 24px;
+
+		&:nth-child(even) {
+			background: color-mix(in srgb, var(--color-text) 4%, transparent);
+			backdrop-filter: blur(12px);
+		}
 	}
 }
 
@@ -611,6 +634,11 @@
 
 	.headline-description {
 		text-align: center;
+	}
+
+	span[data-title] {
+		color: $coral;
+		display: inline-flex;
 	}
 }
 

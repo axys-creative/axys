@@ -5,13 +5,55 @@
 	import CopyButton from '$lib/components/copy-button.svelte';
 	import RichText from '$lib/components/rich-text.svelte';
 
-	type TokenRow = { code: string; description: string; example: string };
+	type TokenRow = { code: string; description: string; example: string; plain?: boolean };
+
+	// The table shows the token as the example uses it; the copy button keeps the `[words]` placeholder.
+	const shown = (row: TokenRow) => row.example.match(/\[[^\]]*\]\{[^}]*\}/)?.[0] ?? row.code;
 
 	const lineBreak: TokenRow[] = [
 		{
 			code: '{.br}',
 			description: 'Starts a new line. Everything after it moves down.',
 			example: 'First line{.br}Second line'
+		}
+	];
+
+	const headings: TokenRow[] = [
+		{
+			code: '[words]{.h1}',
+			description: 'The H1 size and font, without making the words a heading.',
+			example: '[Heading 1]{.h1}',
+			plain: true
+		},
+		{
+			code: '[words]{.h2}',
+			description: 'The H2 size and font, without making the words a heading.',
+			example: '[Heading 2]{.h2}',
+			plain: true
+		},
+		{
+			code: '[words]{.h3}',
+			description: 'The H3 size and font, without making the words a heading.',
+			example: '[Heading 3]{.h3}',
+			plain: true
+		},
+		{
+			code: '[words]{.h4}',
+			description: 'The H4 size and font, without making the words a heading.',
+			example: '[Heading 4]{.h4}',
+			plain: true
+		},
+		{
+			code: '[words]{.h5}',
+			description: 'The H5 size and font, without making the words a heading.',
+			example: '[Heading 5]{.h5}',
+			plain: true
+		},
+		{
+			code: '[words]{.h6}',
+			description: 'The H6 size and font, without making the words a heading.',
+			example: '[Heading 6]{.h6}',
+			plain: true
 		}
 	];
 
@@ -32,14 +74,34 @@
 			example: 'Make it [bold]{.strong}'
 		},
 		{
+			code: '[words]{.highlight}',
+			description: 'Puts a solid accent color behind the words.',
+			example: 'Make it [count]{.highlight}'
+		},
+		{
 			code: '[words]{.italic}',
 			description: 'Slants the words.',
 			example: 'Make it [slanted]{.italic}'
 		},
 		{
+			code: '[words]{.strike}',
+			description: 'Draws a line through the words.',
+			example: 'Was [$100]{.strike} now $80'
+		},
+		{
 			code: '[words]{.stroke}',
 			description: 'Outlines the words and leaves the inside empty.',
 			example: 'Make it [outlined]{.stroke}'
+		},
+		{
+			code: '[words]{.nowrap}',
+			description: 'Keeps the words together so they never split across two lines.',
+			example: 'A [long phrase kept whole]{.nowrap}'
+		},
+		{
+			code: '[words]{.glitch}',
+			description: 'Scrambles the letters each time the words scroll into view.',
+			example: 'Make it [glitch]{.glitch}'
 		},
 		{
 			code: '[words]{.underline}',
@@ -109,8 +171,8 @@
 			<h1 class="page-title" aria-label="CMS Tokens">
 				<span aria-hidden="true">
 					CMS
-					<span class="scroll-glitch coral-text" data-title="tokens" {@attach titleGlitch}
-						>tokens</span
+					<span class="scroll-glitch coral-text" data-title="Tokens" {@attach titleGlitch}
+						>Tokens</span
 					>
 				</span>
 			</h1>
@@ -175,13 +237,39 @@
 				{@render tokenRow(row)}
 			{/each}
 		</div>
+
+		<div class="tokens-header">
+			<h2
+				class="sub-title scroll-glitch yellow-text"
+				aria-label="Headings"
+				data-title="Headings"
+				{@attach titleGlitch}
+			>
+				Headings
+			</h2>
+			<p class="tokens-header__description">
+				Give any words the size and font of a heading. They are shown at body size here so the
+				difference between levels is clear. This changes only how the words look, not the page's
+				heading structure.
+			</p>
+		</div>
+
+		<div class="table" role="table">
+			<div class="table-block" role="row">
+				<div class="table-block__info" role="columnheader">Token</div>
+				<div class="table-block__details" role="columnheader">Description</div>
+			</div>
+			{#each headings as row (row.code)}
+				{@render tokenRow(row)}
+			{/each}
+		</div>
 	</section>
 </main>
 
 {#snippet tokenRow(row: TokenRow)}
 	<div class="table-block" role="row">
 		<div class="table-block__info" role="cell">
-			<code>{row.code}</code>
+			<code>{shown(row)}</code>
 			<CopyButton
 				class="table-block__copy"
 				text={row.code}
@@ -192,7 +280,9 @@
 			/>
 		</div>
 		<div class="table-block__details" role="cell">{row.description}</div>
-		<div class="table-block__preview" role="cell"><RichText text={row.example} /></div>
+		<div class="table-block__preview" class:table-block__preview--body={row.plain} role="cell">
+			<RichText text={row.example} />
+		</div>
 	</div>
 {/snippet}
 

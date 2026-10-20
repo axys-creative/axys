@@ -45,6 +45,12 @@
 			"url": "/policies",
 			"icon": "file",
 			"accent": "yellow"
+		},
+		{
+			"text": "Tokens",
+			"url": "/tokens",
+			"icon": "palette",
+			"accent": "blue"
 		}
 	],
 	"socialLabel": "Social [Media]{.secondary}",

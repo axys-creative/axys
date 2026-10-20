@@ -6,6 +6,7 @@
 		type FooterScrollRevealProps
 	} from '$lib/components/footer-scroll-reveal.svelte';
 	import FooterSimple, { type FooterSimpleProps } from '$lib/components/footer-simple.svelte';
+	import LoaderGrid from '$lib/components/loader-grid.svelte';
 	import PageTransition from '$lib/components/page-transition.svelte';
 	import ScrollProgress from '$lib/components/scroll-progress.svelte';
 	import SideShadows from '$lib/components/side-shadows.svelte';
@@ -29,6 +30,7 @@
 	let { children } = $props();
 </script>
 
+<LoaderGrid />
 <SmoothScroll />
 <PageTransition name="fade" preserveHeader />
 

@@ -16,6 +16,7 @@ const circle =
 
 // One line per behavior an admin can ask for with a class. Delete a line, and its attachment file, to remove it.
 const behaviors: Record<string, Behavior> = {
+	glitch: async () => (await import('./glitch-scroll')).glitchScroll({ mono: false }),
 	scribble: async (scroll) =>
 		(await import('./scribble')).scribble({ curve: 'zigzag', thickness: 0.2, scroll, once: false }),
 	'scribble-circle': circle(1),

@@ -15,6 +15,7 @@
 	import ScrollProgress from '$lib/components/scroll-progress.svelte';
 	import SideShadows from '$lib/components/side-shadows.svelte';
 	import Form from '$lib/components/form.svelte';
+	import LocalTime from '$lib/components/local-time.svelte';
 	import Counter from '$lib/components/counter.svelte';
 	import CarouselAccordion from '$lib/components/carousel-accordion.svelte';
 	import Carousel from '$lib/components/carousel.svelte';
@@ -48,6 +49,8 @@
 		marqueeProps,
 		imageComparisonProps,
 		imageWaveProps,
+		loaderGridProps,
+		localTimeProps,
 		mouseCursorProps,
 		postCardProps,
 		richTextProps,
@@ -555,6 +558,22 @@
 		<ImageWave class="full" images={galleryImages(8)} scrub={0.5} />
 		<h3 class="plain">Reverses with the scroll direction</h3>
 		<ImageWave class="full" images={galleryImages(8)} scrub={0.5} reverse />
+	</LibrarySection>
+
+	<LibrarySection
+		title="Loader Grid"
+		type="Component"
+		description="A page loader. Tiles cover the screen with a percentage counting up in the corner, then fade away in a scattered wave from the top left. It shows on a hard load or refresh only, and is mounted once in the site layout. Progress follows the fonts and pictures in the first screen, never finishing faster than `minDuration`. Anything with an intro animation waits for `loading.done` from `utils/loading.svelte.ts`: by making the attachment conditional on it, or by returning early from a `$effect`. Another look is a `loader-<name>.svelte` that renders inside `loader.svelte`. To remove it, delete `loader.svelte`, `loader-grid.svelte`, `utils/loading.svelte.ts`, the layout tag and `--z-loading`."
+		props={loaderGridProps}
+	/>
+
+	<LibrarySection
+		title="Local Time"
+		type="Component"
+		description="The current time in a fixed time zone, such as the agency's, instead of the visitor's. It updates every minute and shows nothing until it has mounted, so the server never renders a stale time. The Axys header puts it before the menu button through the `aside` slot of the absolute header, where it stays put when the controls change."
+		props={localTimeProps}
+	>
+		<LocalTime />
 	</LibrarySection>
 
 	<LibrarySection

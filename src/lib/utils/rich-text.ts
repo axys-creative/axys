@@ -1,12 +1,22 @@
 /** Class names an admin can use in `[text]{.name}`. Anything else is dropped and the text stays. */
 export const richTextClasses = [
+	'glitch',
+	'h1',
+	'h2',
+	'h3',
+	'h4',
+	'h5',
+	'h6',
+	'highlight',
 	'italic',
+	'nowrap',
 	'primary',
 	'scribble',
 	'scribble-circle',
 	'scribble-circle-tight',
 	'scribble-circle-wide',
 	'secondary',
+	'strike',
 	'stroke',
 	'strong',
 	'underline'
@@ -28,14 +38,18 @@ export function richTextToken(inner: string, names: string) {
 	const classes = [...used]
 		.filter(
 			(name) =>
+				/^h[1-6]$/.test(name) ||
+				name === 'highlight' ||
 				name === 'italic' ||
+				name === 'nowrap' ||
 				name === 'primary' ||
 				name === 'secondary' ||
+				name === 'strike' ||
 				name === 'stroke' ||
 				name === 'underline'
 		)
 		.map((name) => `rich-text--${name}`);
-	const drawn = [...used].find((name) => name.startsWith('scribble'));
+	const drawn = [...used].find((name) => name === 'glitch' || name.startsWith('scribble'));
 	const behaviors = drawn ? ` data-rich-text="${drawn}"` : '';
 	const tag = used.has('strong') ? 'strong' : 'span';
 	const attributes = `${classes.length ? ` class="${classes.join(' ')}"` : ''}${behaviors}`;

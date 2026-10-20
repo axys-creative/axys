@@ -2,6 +2,7 @@
 	import { createAttachmentKey } from 'svelte/attachments';
 	import { cursorTarget } from '$lib/attachments/cursor-target';
 	import { glitchHover } from '$lib/attachments/glitch-hover';
+	import LocalTime from '$lib/components/local-time.svelte';
 	import HeaderAbsolute from '$lib/components/header-absolute.svelte';
 	import SiteNavAxys, {
 		type SiteNavAxysLink,
@@ -28,6 +29,9 @@
 		[createAttachmentKey()]: glitchHover({ target: '.text', duration: 0.4 })
 	}}
 >
+	{#snippet aside()}
+		<LocalTime class="header-time" />
+	{/snippet}
 	{#snippet navigation({ id, open, close })}
 		<SiteNavAxys
 			{id}
@@ -40,3 +44,23 @@
 		/>
 	{/snippet}
 </HeaderAbsolute>
+
+<style lang="scss">
+	@use 'base/mixins';
+
+	:global(.local-time.header-time) {
+		margin-inline-end: calc(76px + 128px);
+
+		@include mixins.max-md {
+			margin-inline-end: calc(76px + 64px);
+
+			:global(.label) {
+				display: none;
+			}
+		}
+
+		@include mixins.max-xs {
+			display: none;
+		}
+	}
+</style>

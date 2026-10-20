@@ -1,5 +1,11 @@
 import type { Attachment } from 'svelte/attachments';
-import { preloadScramble, scrambleTo, stopScramble, type ScrambleChars } from '$lib/utils/scramble';
+import {
+	lockWidth as pinWidth,
+	preloadScramble,
+	scrambleTo,
+	stopScramble,
+	type ScrambleChars
+} from '$lib/utils/scramble';
 import { parseScrollPoint } from '$lib/utils/scroll-point';
 import { onScrollZone } from '$lib/utils/scroll-zone';
 import './glitch.scss';
@@ -20,6 +26,8 @@ export type GlitchScrollOptions = {
 	end?: string;
 	/** Use the mono-spaced font so the width changes less while scrambling. */
 	mono?: boolean;
+	/** Holds the element at its resting width so the scramble cannot make the line around it shake. */
+	lockWidth?: boolean;
 };
 
 /** Scrambles the element's text each time it scrolls into view. */
@@ -31,7 +39,8 @@ export function glitchScroll({
 	trigger,
 	start = 'top 98%',
 	end = 'bottom 2%',
-	mono = true
+	mono = true,
+	lockWidth = true
 }: GlitchScrollOptions = {}): Attachment<HTMLElement> {
 	return (el) => {
 		if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -41,6 +50,7 @@ export function glitchScroll({
 
 		preloadScramble();
 		if (mono) el.classList.add('glitch-text');
+		const unlock = lockWidth ? pinWidth(el) : undefined;
 
 		const stopWatching = onScrollZone(watched, {
 			start: parseScrollPoint(start, 'top 98%'),
@@ -56,6 +66,7 @@ export function glitchScroll({
 		return () => {
 			stopWatching();
 			stopScramble(el);
+			unlock?.();
 			el.textContent = original;
 			el.classList.remove('glitch-text');
 		};

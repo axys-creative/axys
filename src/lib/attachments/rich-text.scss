@@ -1,3 +1,5 @@
+@use 'base/mixins';
+
 .rich-text--primary {
 	color: var(--color-accent-text);
 }
@@ -19,4 +21,40 @@
 	text-decoration: underline;
 	text-decoration-thickness: 0.08em;
 	text-underline-offset: 0.15em;
+}
+
+.rich-text--highlight {
+	padding-inline: 0.15em;
+	border-radius: 0.15em;
+	background: var(--color-accent);
+	color: var(--color-on-accent);
+	box-decoration-break: clone;
+	-webkit-box-decoration-break: clone;
+}
+
+.rich-text--nowrap {
+	white-space: nowrap;
+}
+
+.rich-text--strike {
+	text-decoration: line-through;
+	text-decoration-thickness: 0.08em;
+}
+
+@each $level in 1, 2, 3, 4, 5, 6 {
+	.rich-text--h#{$level} {
+		@if $level == 1 {
+			@include mixins.h1;
+		} @else if $level == 2 {
+			@include mixins.h2;
+		} @else if $level == 3 {
+			@include mixins.h3;
+		} @else if $level == 4 {
+			@include mixins.h4;
+		} @else if $level == 5 {
+			@include mixins.h5;
+		} @else {
+			@include mixins.h6;
+		}
+	}
 }

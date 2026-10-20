@@ -24,6 +24,8 @@
 		strapIcon?: string;
 		/** Shows the buttons beside the menu button from the `lg` breakpoint up. Only with the `controls` layout. */
 		showCtas?: boolean;
+		/** Sits on its own beside the controls, against the same edge, so it stays put when the controls change. */
+		aside?: Snippet;
 		/** Replaces the built-in navigation panel. Gets its `id` (for `aria-controls`), whether it is `open`, and `close`. */
 		navigation?: Snippet<[{ id: string; open: boolean; close: () => void }]>;
 	};
@@ -60,6 +62,7 @@
 		strapIcon = 'orbit',
 		navSurface = 'solid',
 		showCtas = true,
+		aside,
 		navigation
 	}: HeaderAbsoluteProps = $props();
 
@@ -119,6 +122,10 @@ so a link or button anywhere else on the page stays clickable, even right under 
 		<div class="strap place-end">
 			<Strap icon={strapIcon} bleed={40}><SocialLinks links={socialLinks} /></Strap>
 		</div>
+	{/if}
+
+	{#if aside}
+		<div class="aside place-{controlsPlacement}">{@render aside()}</div>
 	{/if}
 
 	<div class="controls place-{controlsPlacement}" bind:this={controls}>
@@ -215,6 +222,15 @@ so a link or button anywhere else on the page stays clickable, even right under 
 		align-items: center;
 		height: var(--bar);
 		pointer-events: auto;
+	}
+
+	.aside {
+		position: absolute;
+		top: var(--top);
+		display: flex;
+		align-items: center;
+		height: var(--bar);
+		pointer-events: none;
 	}
 
 	.links,

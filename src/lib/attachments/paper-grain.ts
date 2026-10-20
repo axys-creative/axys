@@ -2,8 +2,8 @@ import type { Attachment } from 'svelte/attachments';
 import './paper-grain.scss';
 
 export type PaperGrainOptions = {
-	/** `fibers` is sparse, tiny, randomly turned wisps, `flecks` adds a few specks, `pulp` crosses the lines over a soft mottle. */
-	variant?: 'fibers' | 'flecks' | 'pulp';
+	/** `fibers` is sparse, tiny, randomly turned wisps, `flecks` adds a few specks and long streaks, `specks` is only the fine specks, `pulp` crosses the lines over a soft mottle. */
+	variant?: 'fibers' | 'flecks' | 'specks' | 'pulp';
 	/** How visible the grain is, 0 to 1. Defaults to `0.1`. */
 	opacity?: number;
 	/** Any CSS color for the grain. Defaults to the text color, so it follows the theme. */

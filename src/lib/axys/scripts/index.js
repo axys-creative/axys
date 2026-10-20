@@ -9,4 +9,3 @@ import './utility.js';
 
 import './global/animations.js';
 import './global/discount.js';
-import './global/loader.js';

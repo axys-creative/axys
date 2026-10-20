@@ -6,6 +6,8 @@ export type CursorVariant = {
 	opacity?: number;
 	/** Any CSS background, e.g. a color or gradient. */
 	background?: string;
+	/** A CSS border-radius. Defaults to a circle. */
+	radius?: string;
 	/** A CSS border shorthand, e.g. `1px dashed var(--color-accent)`. */
 	border?: string;
 	/** Color of the message text. */
@@ -35,8 +37,8 @@ export type CursorClaim = {
 	content?: CursorContent;
 	tilt?: VelocityTiltOptions;
 	hidden?: boolean;
-	/** Where the cursor should sit instead of following the mouse. Read every frame. */
-	target?: () => { x: number; y: number } | null;
+	/** Where the cursor should sit instead of following the mouse, and optionally the size it takes there. Read every frame. */
+	target?: () => { x: number; y: number; width?: number; height?: number } | null;
 };
 
 /**
