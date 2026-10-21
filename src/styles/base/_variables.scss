@@ -136,17 +136,6 @@ $green: #a4d1a2;
 	}
 }
 
-// Without JS, follow the OS; the inline script in app.html sets data-theme otherwise.
-@media (prefers-color-scheme: light) {
-	:root:not([data-theme]) {
-		@include light-tokens;
-	}
-}
-
-:root[data-theme='light'] {
-	@include light-tokens;
-}
-
 :root[data-theme='dark'] {
 	color-scheme: dark;
 }

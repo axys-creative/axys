@@ -5,7 +5,7 @@
 	"includeTop": true,
 	"includeBottom": true,
 	"divider": true,
-	"showThemeToggle": true,
+	"showThemeToggle": false,
 	"message": "A simple footer with a wide range of configuration options.",
 	"linksets": [
 		{

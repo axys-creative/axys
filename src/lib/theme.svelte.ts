@@ -5,9 +5,8 @@ const query = () => matchMedia('(prefers-color-scheme: dark)');
 
 export const theme = $state<{ preference: ThemePreference }>({ preference: 'system' });
 
-function apply(preference: ThemePreference) {
-	const resolved = preference === 'system' ? (query().matches ? 'dark' : 'light') : preference;
-	document.documentElement.dataset.theme = resolved;
+function apply() {
+	document.documentElement.dataset.theme = 'dark';
 }
 
 export function setTheme(preference: ThemePreference) {
@@ -17,7 +16,7 @@ export function setTheme(preference: ThemePreference) {
 	} catch {
 		// Storage can be blocked; the choice still applies for this visit.
 	}
-	apply(preference);
+	apply();
 }
 
 // Call once from onMount; returns a cleanup function.
@@ -28,10 +27,10 @@ export function initTheme() {
 		theme.preference = 'system';
 	}
 
-	apply(theme.preference);
+	apply();
 
 	const mq = query();
-	const onChange = () => theme.preference === 'system' && apply('system');
+	const onChange = () => theme.preference === 'system' && apply();
 	mq.addEventListener('change', onChange);
 	return () => mq.removeEventListener('change', onChange);
 }

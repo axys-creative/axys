@@ -6,10 +6,7 @@
 		<meta name="text-scale" content="scale" />
 		<script>
 			try {
-				const saved = localStorage.getItem('theme-preference') || 'system';
-				const dark = matchMedia('(prefers-color-scheme: dark)').matches;
-				document.documentElement.dataset.theme =
-					saved === 'system' ? (dark ? 'dark' : 'light') : saved;
+				document.documentElement.dataset.theme = 'dark';
 			} catch {}
 		</script>
 		<script>
@@ -37,9 +34,6 @@
 				z-index: 100;
 				background: #1a1a1a;
 				animation: cover-failsafe 0.3s ease 5s forwards;
-			}
-			html[data-theme='light'][data-covered]::after {
-				background: #f1f1f1;
 			}
 			@keyframes cover-failsafe {
 				to {
