@@ -294,96 +294,162 @@
 		</div>
 
 		<div class="work-showcase">
-			<a
-				class="showcase-link tab-element-page"
-				href="https://joinsunder.com/"
-				target="_blank"
-				aria-label="Work item - Join Sunder, click to visit site"
-			>
+			<div class="showcase-link">
 				<figure class="showcase-item">
-					<div class="showcase-media" {@attach gridFade({ size: 'md', sequence: 'random' })}>
-						<img
-							class="showcase-img"
-							src="/assets/images/showcase-1.webp"
-							alt="Join Sunder showcase"
-							loading="lazy"
-							width="400"
-							height="250"
+					<div class="showcase-frame">
+						<a
+							class="showcase-cover"
+							href="https://joinsunder.com/"
+							target="_blank"
+							rel="noopener noreferrer"
+							tabindex="-1"
+							aria-hidden="true"
+							><div
+								class="showcase-media"
+								{@attach gridFade({ size: 'md', sequence: 'random', scrub: false, duration: 0.8 })}
+							>
+								<img
+									class="showcase-img"
+									src="/assets/images/showcase-1.webp"
+									alt="Join Sunder showcase"
+									loading="lazy"
+									width="400"
+									height="250"
+								/>
+							</div></a
+						>
+					</div>
+					<div class="showcase-visit">
+						<Button
+							type="square"
+							text="Visit site"
+							textDescription="Visit Join Sunder"
+							url="https://joinsunder.com/"
+							newTab
 						/>
 					</div>
 					<figcaption class="showcase-caption gsap-animate">
 						Join Sunder &nbsp;&nbsp;•&nbsp;&nbsp; Development
 					</figcaption>
 				</figure>
-			</a>
-			<a
-				class="showcase-link tab-element-page"
-				href="https://flavorsofalchemy.netlify.app/"
-				target="_blank"
-				aria-label="Flavors of Alchemy"
-			>
+			</div>
+			<div class="showcase-link">
 				<figure class="showcase-item">
-					<div class="showcase-media" {@attach gridFade({ size: 'md', sequence: 'random' })}>
-						<img
-							class="showcase-img"
-							src="/assets/images/showcase-2.webp"
-							alt="Work item - Flavors of Alchemy, click to visit site"
-							loading="lazy"
-							width="400"
-							height="200"
+					<div class="showcase-frame">
+						<a
+							class="showcase-cover"
+							href="https://flavorsofalchemy.netlify.app/"
+							target="_blank"
+							rel="noopener noreferrer"
+							tabindex="-1"
+							aria-hidden="true"
+							><div
+								class="showcase-media"
+								{@attach gridFade({ size: 'md', sequence: 'random', scrub: false, duration: 0.8 })}
+							>
+								<img
+									class="showcase-img"
+									src="/assets/images/showcase-2.webp"
+									alt="Work item - Flavors of Alchemy, click to visit site"
+									loading="lazy"
+									width="400"
+									height="200"
+								/>
+							</div></a
+						>
+					</div>
+					<div class="showcase-visit">
+						<Button
+							type="square"
+							text="Visit site"
+							textDescription="Visit Flavors of Alchemy"
+							url="https://flavorsofalchemy.netlify.app/"
+							newTab
 						/>
 					</div>
 					<figcaption class="showcase-caption gsap-animate">
 						Flavors of Alchemy &nbsp;&nbsp;•&nbsp;&nbsp; Design + Development
 					</figcaption>
 				</figure>
-			</a>
-			<a
-				class="showcase-link tab-element-page"
-				href="https://essentialism.netlify.app"
-				target="_blank"
-				aria-disabled="false"
-				aria-label="Work item - Essence, click to visit site"
-			>
+			</div>
+			<div class="showcase-link">
 				<figure class="showcase-item">
-					<div class="showcase-media" {@attach gridFade({ size: 'md', sequence: 'random' })}>
-						<img
-							class="showcase-img"
-							src="/assets/images/showcase-3.webp"
-							alt="Essence showcase"
-							loading="lazy"
-							width="400"
-							height="200"
+					<div class="showcase-frame">
+						<a
+							class="showcase-cover"
+							href="https://essentialism.netlify.app"
+							target="_blank"
+							rel="noopener noreferrer"
+							tabindex="-1"
+							aria-hidden="true"
+							><div
+								class="showcase-media"
+								{@attach gridFade({ size: 'md', sequence: 'random', scrub: false, duration: 0.8 })}
+							>
+								<img
+									class="showcase-img"
+									src="/assets/images/showcase-3.webp"
+									alt="Essence showcase"
+									loading="lazy"
+									width="400"
+									height="200"
+								/>
+							</div></a
+						>
+					</div>
+					<div class="showcase-visit">
+						<Button
+							type="square"
+							text="Visit site"
+							textDescription="Visit Essence"
+							url="https://essentialism.netlify.app"
+							newTab
 						/>
 					</div>
 					<figcaption class="showcase-caption gsap-animate">
 						Essence &nbsp;&nbsp;•&nbsp;&nbsp; Design + Development
 					</figcaption>
 				</figure>
-			</a>
-			<a
-				class="showcase-link tab-element-page"
-				href="https://coreapp.netlify.app/"
-				target="_blank"
-				aria-disabled="false"
-				aria-label="Work item - Core, click to visit site"
-			>
+			</div>
+			<div class="showcase-link">
 				<figure class="showcase-item">
-					<div class="showcase-media" {@attach gridFade({ size: 'md', sequence: 'random' })}>
-						<img
-							class="showcase-img"
-							src="/assets/images/showcase-4.webp"
-							alt="Core showcase"
-							loading="lazy"
-							width="400"
-							height="200"
+					<div class="showcase-frame">
+						<a
+							class="showcase-cover"
+							href="https://coreapp.netlify.app/"
+							target="_blank"
+							rel="noopener noreferrer"
+							tabindex="-1"
+							aria-hidden="true"
+							><div
+								class="showcase-media"
+								{@attach gridFade({ size: 'md', sequence: 'random', scrub: false, duration: 0.8 })}
+							>
+								<img
+									class="showcase-img"
+									src="/assets/images/showcase-4.webp"
+									alt="Core showcase"
+									loading="lazy"
+									width="400"
+									height="200"
+								/>
+							</div></a
+						>
+					</div>
+					<div class="showcase-visit">
+						<Button
+							type="square"
+							text="Visit site"
+							textDescription="Visit Core"
+							url="https://coreapp.netlify.app/"
+							newTab
 						/>
 					</div>
 					<figcaption class="showcase-caption gsap-animate">
 						Core &nbsp;&nbsp;•&nbsp;&nbsp; Design + Development
 					</figcaption>
 				</figure>
-			</a>
+			</div>
 		</div>
 
 		<small class="made-with-care">

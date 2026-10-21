@@ -88,6 +88,11 @@
 			{
 				name: 'grain',
 				description: 'A number, the film grain from `0` up. Defaults to `0.035`.'
+			},
+			{
+				name: 'glass',
+				description:
+					"`{ cellSize, bevel, refraction, cellShift, line, shade, pulse }`. A grid of glass tiles over the field: the light bends along each tile's edges and every tile moves it a different small amount. `cellSize` and `bevel` are in pixels. Off unless set; `{}` turns it on with the defaults `96`, `16`, `0.03`, `0.012`, `0.03` and `0.04`. `pulse` (`{ interval, duration, width, rest, follow }`) hides the glass between waves: every `interval` seconds (`10`) it sweeps from the top left to the bottom right over `duration` seconds (`7`) in a band `width` wide (`0.35`, a fraction of the diagonal), and `rest` (`0`) is how much shows in between. `follow` (`0.3`, a fraction of the screen, `0` for none) is the size of the glass that follows the pointer while a wave is crossing. Without `pulse` the glass is always shown, as it is with reduced motion."
 			}
 		]}
 		propsLabel="options"
@@ -113,6 +118,21 @@
 					ripple: { enabled: false },
 					lobes: { count: 4, formMin: 0.3 },
 					mouse: { sparkle: true }
+				})}
+			/>
+		</LibrarySection>
+		<LibrarySection
+			level={3}
+			title="Glass tiles"
+			description="`glass` lays a grid of glass over the field: the glow and sparkle bend along each tile's edges, and every tile sits a little off from its neighbors. `pulse` shows it as a wave every few seconds."
+		>
+			<BackgroundFrame
+				effect={bgDust({
+					colors: {
+						dark: { base: '#101010', highlight: '#c27757' },
+						light: { base: '#fff8f4', highlight: '#e98a63' }
+					},
+					glass: { pulse: {} }
 				})}
 			/>
 		</LibrarySection>

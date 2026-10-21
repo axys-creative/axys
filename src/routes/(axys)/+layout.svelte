@@ -70,7 +70,8 @@
 			colors: { dark: { base: '#101010', highlight: '#c27757' } },
 			lobes: { drift: 0.6 },
 			crease: { angle: 20, offset: -0.5 },
-			vignette: { strength: 0.62 }
+			vignette: { strength: 0.62 },
+			glass: { pulse: {} }
 		})}
 	></div>
 	<SmoothScroll />

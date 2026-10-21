@@ -90,6 +90,34 @@ export type BgDustOptions = {
 	vignette?: { start?: number; end?: number; strength?: number };
 	/** The film grain, from 0 up. */
 	grain?: number;
+	/** A grid of glass tiles over the field: the light bends at each tile's edges and every tile sits a little off. Off unless set. */
+	glass?: {
+		/** The width and height of a tile, in CSS pixels. */
+		cellSize?: number;
+		/** How far in from each edge the glass curves, in CSS pixels. */
+		bevel?: number;
+		/** How far the field bends at the edges. */
+		refraction?: number;
+		/** How far each tile moves the field as a whole, a different amount for each. */
+		cellShift?: number;
+		/** The brightness of the thin line along each edge. */
+		line?: number;
+		/** The brightness of the soft shading inside each edge. */
+		shade?: number;
+		/** Hides the glass between waves: every so often it shows, sweeping from the top left to the bottom right, then fades. Always shown unless set. */
+		pulse?: {
+			/** Seconds of rest between one wave and the next. */
+			interval?: number;
+			/** Seconds a wave takes to cross the screen. */
+			duration?: number;
+			/** How wide the band of visible glass is, as a fraction of the diagonal. */
+			width?: number;
+			/** How much of the glass shows between waves, from 0 (none) to 1. */
+			rest?: number;
+			/** The size of the glass that follows the pointer while a wave is crossing, as a fraction of the screen. `0` turns it off. */
+			follow?: number;
+		};
+	};
 };
 
 const DEFAULTS = {
@@ -126,7 +154,9 @@ const DEFAULTS = {
 	},
 	crease: { angle: -20, offset: 0.08, width: 0.24, strength: 0.12 },
 	vignette: { start: 0.15, end: 0.95, strength: 0.55 },
-	grain: 0.035
+	grain: 0.035,
+	glass: { cellSize: 96, bevel: 16, refraction: 0.03, cellShift: 0.012, line: 0.03, shade: 0.04 },
+	pulse: { interval: 10, duration: 7, width: 0.35, rest: 0, follow: 0.3 }
 };
 
 const MAX_LOBES = 4;
@@ -184,6 +214,19 @@ const FRAGMENT = `
   uniform float uVignetteStrength;
   uniform float uGrainIntensity;
 
+  uniform float uGlassCell;
+  uniform float uGlassBevel;
+  uniform float uGlassRefraction;
+  uniform float uGlassShift;
+  uniform float uGlassLine;
+  uniform float uGlassShade;
+  uniform float uPixelRatio;
+  uniform float uGlassWave;
+  uniform float uGlassWidth;
+  uniform float uGlassRest;
+  uniform float uGlassFollow;
+  uniform float uGlassActive;
+
   uniform float uTurbSpeed;
   uniform float uTurbScale;
   uniform float uTurbIntensity;
@@ -218,6 +261,43 @@ const FRAGMENT = `
   void main() {
     // Centered, aspect-normalized coordinate space
     vec2 p = (gl_FragCoord.xy - 0.5 * uResolution) / min(uResolution.x, uResolution.y);
+    vec2 screenP = p;
+
+    // Glass tiles: each tile moves what is behind it a little, and the field bends toward the tile's
+    // center along its edges, like the bevel of a pane.
+    float glassEdge = 0.0;
+    float glassBevel = 0.0;
+    if (uGlassCell > 0.0) {
+      vec2 cellCoord = gl_FragCoord.xy / uGlassCell;
+      vec2 cellId = floor(cellCoord);
+      vec2 inside = fract(cellCoord);
+      vec2 toEdge = min(inside, 1.0 - inside) * uGlassCell;
+      vec2 inward = vec2(inside.x < 0.5 ? 1.0 : -1.0, inside.y < 0.5 ? 1.0 : -1.0);
+      vec2 curve = 1.0 - smoothstep(0.0, uGlassBevel, toEdge);
+      curve *= curve;
+      vec2 shift = vec2(hash(cellId), hash(cellId + 17.3)) * 2.0 - 1.0;
+
+      // A wave from the top left to the bottom right decides how much of the glass shows. Below zero
+      // is the glass at rest, above 1 is no wave at all (always shown).
+      float show = 1.0;
+      if (uGlassWave < 1.5) {
+        float diagonal = 0.5 * (gl_FragCoord.x / uResolution.x + 1.0 - gl_FragCoord.y / uResolution.y);
+        float center = mix(-uGlassWidth, 1.0 + uGlassWidth, max(uGlassWave, 0.0));
+        float band = uGlassWave < 0.0 ? 0.0 : 1.0 - smoothstep(0.0, uGlassWidth, abs(diagonal - center));
+        show = mix(uGlassRest, 1.0, band);
+      }
+
+      // While a wave is crossing, the glass also shows under the pointer.
+      if (uGlassFollow > 0.0) {
+        float near = 1.0 - smoothstep(0.0, uGlassFollow, length(screenP - uMousePos));
+        show = max(show, near * uMouseInfluence * uGlassActive);
+      }
+
+      p += (inward * curve * uGlassRefraction + shift * uGlassShift) * show;
+      float nearest = min(toEdge.x, toEdge.y);
+      glassEdge = (1.0 - smoothstep(0.0, 1.5 * uPixelRatio, nearest)) * show;
+      glassBevel = max(curve.x, curve.y) * show;
+    }
 
     // Stationary ripple warp — only used for lobe glow sampling below,
     // nothing else. The shift cycles through a small number of states
@@ -277,9 +357,10 @@ const FRAGMENT = `
     color -= crease * uCreaseStrength;
 
     // Vignette
-    float r = length(p);
+    float r = length(screenP);
     float vig = 1.0 - uVignetteStrength * smoothstep(uVignetteStart, uVignetteEnd, r);
     color *= vig;
+    color += uHighlightColor * (glassEdge * uGlassLine + glassBevel * uGlassShade) * vig;
 
     // Flowing turbulence — fine sparkle drifting left-to-right, masked to
     // only show up where it's already lit (glow), matching the reference.
@@ -374,6 +455,11 @@ export function bgDust(options: BgDustOptions = {}): Attachment<HTMLElement> {
 			mouse: { ...DEFAULTS.mouse, ...options.mouse },
 			crease: { ...DEFAULTS.crease, ...options.crease },
 			vignette: { ...DEFAULTS.vignette, ...options.vignette }
+		};
+		const glass = options.glass && {
+			...DEFAULTS.glass,
+			...options.glass,
+			pulse: options.glass.pulse && { ...DEFAULTS.pulse, ...options.glass.pulse }
 		};
 		const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -492,6 +578,15 @@ export function bgDust(options: BgDustOptions = {}): Attachment<HTMLElement> {
 		one('uVignetteEnd', config.vignette.end);
 		one('uVignetteStrength', config.vignette.strength);
 		one('uGrainIntensity', config.grain);
+		one('uGlassWidth', glass?.pulse?.width ?? 0.35);
+		one('uGlassRest', glass?.pulse?.rest ?? 0);
+		one('uGlassFollow', glass?.pulse?.follow ?? 0);
+		one('uGlassWave', 2);
+		one('uGlassActive', 1);
+		one('uGlassRefraction', glass?.refraction ?? 0);
+		one('uGlassShift', glass?.cellShift ?? 0);
+		one('uGlassLine', glass?.line ?? 0);
+		one('uGlassShade', glass?.shade ?? 0);
 		one('uTurbSpeed', config.turbulence.speed);
 		one('uTurbScale', config.turbulence.scale);
 		one('uTurbIntensity', config.turbulence.intensity);
@@ -559,6 +654,9 @@ export function bgDust(options: BgDustOptions = {}): Attachment<HTMLElement> {
 				canvas.height = height;
 				gl.viewport(0, 0, width, height);
 			}
+			one('uPixelRatio', ratio);
+			one('uGlassCell', glass ? glass.cellSize * ratio : 0);
+			one('uGlassBevel', glass ? glass.bevel * ratio : 0);
 			if (reduced) still();
 		};
 
@@ -610,6 +708,13 @@ export function bgDust(options: BgDustOptions = {}): Attachment<HTMLElement> {
 			}
 			two('uResolution', canvas.width, canvas.height);
 			one('uTime', elapsed * config.motionSpeed);
+			if (glass?.pulse) {
+				const { interval, duration } = glass.pulse;
+				const phase = (elapsed - config.fadeIn) % (interval + duration);
+				const t = phase < 0 || phase > duration ? -1 : phase / duration;
+				one('uGlassWave', t < 0 ? -1 : t * t * (3 - 2 * t));
+				one('uGlassActive', t < 0 ? 0 : Math.sin(Math.PI * t));
+			}
 
 			influence += ((active ? 1 : 0) - influence) * m.influenceSmoothing;
 			// On entering, jump to the pointer so there is no fake burst of speed from where it last was.

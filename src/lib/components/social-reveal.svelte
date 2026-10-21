@@ -71,6 +71,10 @@
 		display: flex;
 		flex-direction: column;
 		align-items: flex-end;
+
+		@include mixins.max-lg {
+			align-items: flex-start;
+		}
 	}
 
 	// The title sits low until the group is pointed at, then lifts to show the links. On touch and small screens the
@@ -121,6 +125,10 @@
 		margin: 0 -9px 0 0;
 		padding: 0;
 		list-style: none;
+
+		@include mixins.max-lg {
+			margin: 0 0 0 -9px;
+		}
 
 		@include mixins.max-xxl {
 			gap: 16px;

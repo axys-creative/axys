@@ -355,6 +355,10 @@
 		@include mixins.max-md {
 			flex-direction: row-reverse;
 		}
+
+		@include mixins.max-xs {
+			bottom: 72px;
+		}
 	}
 
 	.footer-links {
@@ -379,6 +383,10 @@
 			align-items: flex-start;
 			gap: 6px;
 			translate: 0 8px;
+
+			@include mixins.max-xs {
+				gap: 0;
+			}
 		}
 
 		li {
