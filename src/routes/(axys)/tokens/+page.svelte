@@ -2,6 +2,7 @@
 	import Footer from '$lib/axys/footer.svelte';
 	import { glitchScroll } from '$lib/attachments/glitch-scroll';
 
+	import Button from '$lib/components/button.svelte';
 	import CopyButton from '$lib/components/copy-button.svelte';
 	import RichText from '$lib/components/rich-text.svelte';
 
@@ -262,6 +263,29 @@
 			{#each headings as row (row.code)}
 				{@render tokenRow(row)}
 			{/each}
+		</div>
+	</section>
+
+	<section class="pre-footer" id="pre-footer">
+		<div class="pre-footer-title">
+			<h2 aria-label="Need a token?">
+				<span aria-hidden="true">
+					Need a <span data-title="token?" {@attach titleGlitch}>token?</span>
+				</span>
+			</h2>
+		</div>
+
+		<p class="headline-description">
+			Have a token idea? Reach out at hello@axyscreative.com to request a new token for the
+			dashboard.
+		</p>
+
+		<div class="cta-wrapper">
+			<Button
+				text="Email us"
+				url="mailto:hello@axyscreative.com?subject=Token%20request"
+				type="square"
+			/>
 		</div>
 	</section>
 </main>
