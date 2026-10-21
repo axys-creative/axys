@@ -143,7 +143,7 @@
 		name: 'AXYS Creative',
 		url: 'https://axyscreative.com',
 		logo: 'https://axyscreative.com/public/axys-logo-192.png',
-		image: 'https://axyscreative.com/public/axys-creative-og.png',
+		image: 'https://axyscreative.com/public/open-graph.png',
 		sameAs: [
 			'https://www.instagram.com/axyscreative/',
 			'https://twitter.com/AXYSCreative',

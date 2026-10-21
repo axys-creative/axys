@@ -1,4 +1,3 @@
-import { blog } from '$lib/blog';
 import { pages } from '$lib/content/meta/pages.json';
 import site from '$lib/content/meta/site.json';
 
@@ -6,12 +5,11 @@ export const prerender = true;
 
 const escape = (value: string) => value.replace(/&/g, '&amp;').replace(/</g, '&lt;');
 
-// Pages marked "crawl" in pages.json, plus every published post. Library pages are left out.
+// Pages marked "crawl" in pages.json, Library pages are left out.
 export const GET = () => {
 	const origin = site.url.replace(/\/$/, '');
 	const entries: { path: string; lastmod?: string }[] = [
-		...pages.filter((page) => page.crawlPage).map((page) => ({ path: page.path })),
-		...blog.all.map((post) => ({ path: `/blog/${post.slug}`, lastmod: post.date }))
+		...pages.filter((page) => page.crawlPage).map((page) => ({ path: page.path }))
 	];
 
 	const urls = entries

@@ -1023,32 +1023,6 @@ export const richTextProps = props(
 	['class', 'A string, a class for the wrapping span.']
 );
 
-export const postCardProps = props(
-	[
-		'post',
-		'An object: `slug`, `title`, `description`, `author`, `date` (`YYYY-MM-DD`), `tag`, `coverImage` and `coverAlt`. Links to `/blog/{slug}`. Required.'
-	],
-	[
-		'featured',
-		'A boolean. Lays the card out wide with the image beside the text. Defaults to `false`.'
-	]
-);
-
-export const blogArticleHeroProps = props(
-	['title', 'A string, the post title (the page `h1`). Required.'],
-	['description', 'A string shown under the title.'],
-	['author', 'A string.'],
-	['date', 'A string, `YYYY-MM-DD`. Required.'],
-	['tag', 'A string shown as a tag before the date.'],
-	['coverImage', 'A string, the image path. It drifts slightly as the page scrolls.'],
-	['coverAlt', 'A string, the image description. Leave empty if it is decorative.']
-);
-
-export const blogArticleBodyProps = props([
-	'html',
-	'A string of HTML, rendered from the post Markdown by `renderMarkdown`, which escapes raw HTML and supports Rich Text tokens. Required.'
-]);
-
 export const circleHighlightProps = props(
 	[
 		'eyebrowText, eyebrowIcon, title, description',

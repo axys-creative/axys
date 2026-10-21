@@ -1,6 +1,4 @@
 // @ts-nocheck
-import { toast } from '../components/toast.js';
-
 // Countdown timer for dynamically ending discount state
 const discountCountdownTimer = () => {
 	const currentDate = new Date();
@@ -52,11 +50,3 @@ const discountBenefitText = document.querySelector('.discount-benefit-text');
 discountHighlight?.classList.toggle('discount-styles', discount);
 
 discountBenefitText?.setAttribute('aria-hidden', !discount);
-
-//
-// Toast
-//
-if (!discount && toast) {
-	toast.style.display = 'none';
-	toast.setAttribute('aria-hidden', true);
-}

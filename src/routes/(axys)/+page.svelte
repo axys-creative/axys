@@ -86,10 +86,10 @@
 				name: 'AXYS Creative',
 				url: 'https://axyscreative.com',
 				logo: 'https://axyscreative.com/public/axys-logo-192.png',
-				image: 'https://axyscreative.com/public/axys-creative-og.png',
+				image: 'https://axyscreative.com/public/open-graph.png',
 				sameAs: [
 					'https://www.instagram.com/axyscreative/',
-					'https://twitter.com/AXYSCreative',
+					'https://twitter.com/axyscreative',
 					'https://dribbble.com/axyscreative'
 				],
 				contactPoint: {
@@ -191,30 +191,6 @@
 		{@attach workCursor}
 	/>
 {/snippet}
-
-<div class="toast" role="alert" aria-live="polite">
-	<div class="toast-banner">
-		<h2>15% Off — End of year sale</h2>
-		<button class="toast__close-btn magnet" aria-label="close discount notification">
-			&times;
-		</button>
-	</div>
-
-	<p class="toast-message">
-		Lock in this exclusive discount today and save 15% on your rate—even after the sale ends!
-		<a href="/policies#billing-and-payments" class="classic-link yellow-text tab-element-page">
-			Terms and conditions
-		</a>
-		apply.
-		<br aria-hidden="true" class="sm-screen-and-up" />
-		<br aria-hidden="true" class="sm-screen-and-up" />
-		Offer ends <time datetime="2024-12-31">December 31st, 2024</time>.
-	</p>
-
-	<div class="cta-wrapper toast-cta-group">
-		<a href="#plans" class="toast-cta classic-link yellow-text tab-element-page"> View plans </a>
-	</div>
-</div>
 
 <main id="main" aria-label="Main website content">
 	<section class="hero-section" id="hero-section">

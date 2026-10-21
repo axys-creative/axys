@@ -172,33 +172,6 @@ $min-breakpoints: (
 	translate: -50% -50%;
 }
 
-// Discount
-
-@mixin discount-card-banner($placement: center, $padding: 8px) {
-	background: $yellow;
-	position: absolute;
-	top: 0;
-	left: 0;
-	border-top-left-radius: var(--radius);
-	border-top-right-radius: var(--radius);
-	display: flex;
-	justify-content: $placement;
-	align-items: center;
-	width: 100%;
-	padding: $padding;
-}
-
-@mixin discount-card-banner-text {
-	color: $black;
-	font-size: 16px;
-	font-weight: 700;
-	text-align: center;
-
-	@include mq-max('xxl') {
-		font-size: 14px;
-	}
-}
-
 //
 // Animations
 //

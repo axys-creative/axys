@@ -28,9 +28,7 @@
 
 	const headings: Attachment<HTMLElement> = (root) => {
 		const stops = [
-			...[...root.querySelectorAll<HTMLElement>('h2')]
-				.filter((heading) => !heading.closest('.toast'))
-				.map((heading) => headingLine()(heading)),
+			...[...root.querySelectorAll<HTMLElement>('h2')].map((heading) => headingLine()(heading)),
 			...[
 				...root.querySelectorAll<HTMLElement>(
 					'.headline-description, .description, .tokens-header__description'

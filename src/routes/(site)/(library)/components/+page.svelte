@@ -27,7 +27,6 @@
 	import BackToTop from '$lib/components/back-to-top.svelte';
 	import Button from '$lib/components/button.svelte';
 	import RichText from '$lib/components/rich-text.svelte';
-	import PostCard from '$lib/components/post-card.svelte';
 	import ThemeToggle from '$lib/components/theme-toggle.svelte';
 	import VideoPlayer from '$lib/components/video-player.svelte';
 	import VideoOverlay from '$lib/components/video-overlay.svelte';
@@ -52,7 +51,6 @@
 		loaderGridProps,
 		localTimeProps,
 		mouseCursorProps,
-		postCardProps,
 		richTextProps,
 		scrollProgressProps,
 		sideShadowsProps,
@@ -626,25 +624,6 @@
 		description="A custom cursor that follows the mouse. Mount it once in a layout; attachments such as `cursorContent` and `cursorTarget` then change how it looks. It is hidden on touch devices and with reduced motion. See the Attachments page for live demos."
 		props={mouseCursorProps}
 	/>
-
-	<LibrarySection
-		title="Post Card"
-		type="Component"
-		description="A link card for one post in a list, with its cover image, tag, date, author and description. The first card of the Blog page is featured."
-		props={postCardProps}
-	>
-		<PostCard
-			post={{
-				slug: 'a-short-post',
-				title: 'A sample post',
-				description: 'Cards are shown in a grid on the Blog page.',
-				author: 'Author Here',
-				date: '2026-02-02',
-				tag: 'Update',
-				coverImage: '/images/img-sample-1.jpg'
-			}}
-		/>
-	</LibrarySection>
 
 	<LibrarySection
 		title="Rich Text"

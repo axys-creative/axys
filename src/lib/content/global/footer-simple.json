@@ -17,11 +17,6 @@
 					"newTab": false
 				},
 				{
-					"text": "Blog",
-					"url": "/blog",
-					"newTab": false
-				},
-				{
 					"text": "Style Guide",
 					"url": "/style-guide",
 					"newTab": false

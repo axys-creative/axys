@@ -4,14 +4,7 @@
 			"path": "/",
 			"title": "Unlimited Web Design & Development Services",
 			"description": "Unlock unlimited web design and development services. Subscribe for responsive, user-friendly websites optimized for accessibility and performance.",
-			"ogImage": "/public/axys-creative-og.png",
-			"crawlPage": true
-		},
-		{
-			"path": "/blog",
-			"title": "Blog",
-			"description": "",
-			"ogImage": "",
+			"ogImage": "/public/open-graph.png",
 			"crawlPage": true
 		},
 		{
@@ -80,7 +73,7 @@
 		{
 			"path": "/policies",
 			"title": "Policies",
-			"description": "",
+			"description": "The terms for working with AXYS Creative: ownership of work and content, billing and refunds, privacy, confidentiality, and the legal terms that cover our web design and development subscriptions.",
 			"ogImage": "",
 			"crawlPage": true
 		},

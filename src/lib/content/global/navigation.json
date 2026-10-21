@@ -93,29 +93,6 @@
 					"alt": ""
 				}
 			]
-		},
-		{
-			"text": "Blog",
-			"url": "/blog",
-			"newTab": false,
-			"images": [
-				{
-					"src": "/images/img-sample-3.jpg",
-					"alt": ""
-				},
-				{
-					"src": "/images/img-sample-6.jpg",
-					"alt": ""
-				},
-				{
-					"src": "/images/img-sample-2.jpg",
-					"alt": ""
-				},
-				{
-					"src": "/images/img-sample-7.jpg",
-					"alt": ""
-				}
-			]
 		}
 	],
 	"ctas": [
