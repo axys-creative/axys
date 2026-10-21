@@ -10,8 +10,8 @@
 		icon?: string;
 		/** Where the message sits on desktop. */
 		place?: TooltipPlace;
-		/** Where the message sits below the lg breakpoint. Left and right would run off small screens. */
-		placeSm?: Exclude<TooltipPlace, 'left' | 'right'>;
+		/** Where the message sits below the lg breakpoint. `left` and `right` need room beside the trigger. */
+		placeSm?: TooltipPlace;
 		size?: 'xs' | 'sm' | 'md' | 'lg';
 		/** Adds a small pointer to the message bubble. */
 		includePoint?: boolean;
@@ -35,37 +35,60 @@
 
 	let hovered = $state(false);
 	let focused = $state(false);
+	let pinned = $state(false);
 	let dismissed = $state(false);
+	let touched = false;
+	let root: HTMLElement;
 
-	const open = $derived((hovered || focused) && !dismissed);
+	const open = $derived((hovered || focused || pinned) && !dismissed);
 
 	// Escape closes the message until the pointer or focus comes back.
 	const onkeydown = (event: KeyboardEvent) => {
-		if (event.key === 'Escape' && open) dismissed = true;
+		if (event.key === 'Escape' && open) {
+			dismissed = true;
+			pinned = false;
+		}
+	};
+
+	// A touch has no hover, so a tap pins the message open until the next tap.
+	const hover = (value: boolean) => (event: PointerEvent) => {
+		if (event.pointerType === 'mouse' || event.pointerType === 'pen') hovered = value;
 	};
 
 	$effect(() => {
-		if (!hovered && !focused) dismissed = false;
+		if (!hovered && !focused && !pinned) dismissed = false;
+	});
+
+	$effect(() => {
+		if (!pinned) return;
+		const close = (event: PointerEvent) => {
+			if (!root.contains(event.target as Node)) pinned = false;
+		};
+		document.addEventListener('pointerdown', close);
+		return () => document.removeEventListener('pointerdown', close);
 	});
 </script>
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <span
 	class="tooltip"
+	bind:this={root}
 	class:open
 	class:point={includePoint}
 	data-place={place}
 	data-place-sm={placeSm}
 	data-size={size}
-	onpointerenter={() => (hovered = true)}
-	onpointerleave={() => (hovered = false)}
-	onfocusin={() => (focused = true)}
+	onpointerenter={hover(true)}
+	onpointerleave={hover(false)}
+	onpointerdown={(event) => (touched = event.pointerType === 'touch')}
+	onfocusin={(event) => (focused = (event.target as HTMLElement).matches(':focus-visible'))}
 	onfocusout={() => (focused = false)}
 	{onkeydown}
 >
 	<button
 		class="trigger"
 		type="button"
+		onclick={() => touched && (pinned = !pinned)}
 		aria-describedby={id}
 		aria-label={text ? undefined : 'More information'}
 	>
@@ -306,6 +329,12 @@
 	}
 
 	@include mixins.max-lg {
+		.tooltip[data-place-sm='right'] .message {
+			@include right;
+		}
+		.tooltip[data-place-sm='left'] .message {
+			@include left;
+		}
 		.tooltip[data-place-sm='top'] .message {
 			@include top(center);
 		}

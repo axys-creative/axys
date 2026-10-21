@@ -22,7 +22,7 @@
 		const build = () => {
 			if (!grid) return;
 			const { clientWidth: width, clientHeight: height } = grid;
-			const size = 64;
+			const size = matchMedia('(max-width: 480px)').matches ? 32 : 64;
 			const cols = Math.max(1, Math.round(width / size));
 			const rows = Math.max(1, Math.round(height / size));
 			if (cols === cells.cols && rows === cells.rows) return;

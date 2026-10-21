@@ -115,7 +115,7 @@
 						message="Save {discount} with quarterly billing!"
 						size="xs"
 						place="right"
-						placeSm="bottom-left"
+						placeSm="right"
 						includePoint
 					/>
 				</span>

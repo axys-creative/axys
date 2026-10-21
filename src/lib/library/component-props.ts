@@ -227,7 +227,7 @@ export const tooltipProps = props(
 	],
 	[
 		'placeSm',
-		'The same options without `left` and `right`, used below the lg breakpoint. Defaults to `top`.'
+		'The same options, used below the lg breakpoint. `left` and `right` need room beside the trigger. Defaults to `top`.'
 	],
 	['includePoint', 'A boolean. Adds a small pointer to the bubble.']
 );

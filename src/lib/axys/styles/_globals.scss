@@ -62,7 +62,7 @@ body {
 	&:has(.load-complete) {
 		.hero-section {
 			.section-headline__title .line > span {
-				translate: 0 0;
+				translate: 0 var(--rest, 0px);
 				transform: translateX(0);
 				transition:
 					translate 0.75s ease var(--delay, 0s),

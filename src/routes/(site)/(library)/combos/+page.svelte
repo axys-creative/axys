@@ -298,7 +298,7 @@
 			level={3}
 			title="Tooltip Component"
 			tag="Stationary"
-			description="`tooltip.svelte` opens on hover or keyboard focus, closes with Escape, and links its message to the trigger for screen readers."
+			description="`tooltip.svelte` opens on hover or keyboard focus, or with a tap on touch screens (it stays open until the next tap), closes with Escape, and links its message to the trigger for screen readers."
 			props={tooltipProps}
 		>
 			<div class="row">
